@@ -487,17 +487,19 @@
   .nav-sheet .btn {
     margin-top: var(--space-3);
   }
-
-  /* Room for the pill now sitting fixed at the bottom, so the last thing on
-     the page (always the footer) does not end up underneath it. */
-  .foot {
-    padding-bottom: calc(52px + var(--space-6) + max(var(--hero-gap), env(safe-area-inset-bottom)));
-  }
 }
 
 .foot {
   background: var(--surface-sunken);
   padding-block: clamp(3.5rem, 6vw, 6rem) var(--space-6);
+}
+
+@media (max-width: 980px) {
+  /* Room for the pill now sitting fixed at the bottom, so the last thing on
+     the page (always the footer) does not end up underneath it. */
+  .foot {
+    padding-bottom: calc(52px + var(--space-6) + max(var(--hero-gap), env(safe-area-inset-bottom)));
+  }
 }
 
 .foot-grid {
