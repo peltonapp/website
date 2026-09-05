@@ -536,7 +536,7 @@
   line-height: 1.5;
 }
 
-.foot h4 {
+.foot h3 {
   font-size: var(--fz-label);
   letter-spacing: 0.08em;
   text-transform: uppercase;
