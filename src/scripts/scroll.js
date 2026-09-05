@@ -50,14 +50,21 @@ function collect() {
 function frame() {
   ticking = false
 
-  for (const it of items) {
-    const r = it.el.getBoundingClientRect()
+  // Every getBoundingClientRect() below has to run before any of the writes
+  // that follow it: reading layout after a write invalidates the previous
+  // write forces a synchronous reflow on every single item instead of one
+  // reflow for the whole frame.
+  const rects = items.map((it) => it.el.getBoundingClientRect())
+  const pinRects = pins.map((pin) => pin.el.getBoundingClientRect())
+
+  items.forEach((it, i) => {
+    const r = rects[i]
 
     if (it.kind === 'rise') {
       const p = ease(clamp((vh - r.top - it.delay * 40) / (vh * 0.42)))
       it.el.style.setProperty('--rise-o', p.toFixed(3))
       it.el.style.setProperty('--rise-y', `${(1 - p) * 22}px`)
-      continue
+      return
     }
 
     if (it.kind === 'lines') {
@@ -66,40 +73,40 @@ function frame() {
         const sp = ease(clamp((p - i * 0.07) / 0.55))
         s.style.setProperty('--line-y', `${(1 - sp) * 105}%`)
       })
-      continue
+      return
     }
 
     if (it.kind === 'panel') {
       const p = clamp(-r.top / vh)
       it.el.style.setProperty('--panel-s', (1 - p * 0.055).toFixed(4))
-      continue
+      return
     }
 
     if (it.kind === 'art') {
       const p = clamp((vh - r.top) / (vh + r.height))
       it.el.style.setProperty('--art-y', `${(p - 0.5) * -90}px`)
       it.el.style.setProperty('--art-s', (1.04 - p * 0.05).toFixed(4))
-      continue
+      return
     }
 
     if (it.kind === 'parallax') {
       const p = clamp((vh - r.top) / (vh + r.height))
       it.el.style.setProperty('--shot-y', `${(0.5 - p) * it.amount}px`)
     }
-  }
+  })
 
-  for (const pin of pins) {
-    const r = pin.el.getBoundingClientRect()
+  pins.forEach((pin, i) => {
+    const r = pinRects[i]
     const total = r.height - vh
-    if (total <= 0) continue
+    if (total <= 0) return
     const p = clamp(-r.top / total)
     const n = pin.frames.length
     const idx = Math.min(n - 1, Math.floor(p * n * 0.999))
-    if (idx === pin.last) continue
+    if (idx === pin.last) return
     pin.last = idx
     pin.frames.forEach((f, i) => f.setAttribute('data-active', String(i === idx)))
     pin.caps.forEach((c, i) => c.setAttribute('data-active', String(i === idx)))
-  }
+  })
 }
 
 function onScroll() {

@@ -75,6 +75,16 @@ const builds = [
 }
 
 <script>
-  import { initChips } from '../scripts/download.js'
-  initChips()
+  // A dynamic import, not a static one: this keeps download.js and its own
+  // release-fetch logic out of the initial page's critical request chain.
+  // A few dozen idle-callback milliseconds before the chip becomes
+  // interactive is not something anyone notices.
+  function boot() {
+    import('../scripts/download.js').then(({ initChips }) => initChips())
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(boot, { timeout: 1500 })
+  } else {
+    setTimeout(boot, 200)
+  }
 </script>
