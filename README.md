@@ -43,7 +43,7 @@ It carries no telemetry or analytics of its own, in keeping with Pelton itself.
 
 ## Development
 
-Requires Node 20+ and [pnpm](https://pnpm.io).
+Requires Node 22.12+ and [pnpm](https://pnpm.io).
 
 ```sh
 pnpm install
