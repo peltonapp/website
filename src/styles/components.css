@@ -440,6 +440,26 @@
     display: flex;
   }
 
+  /* Thumb reach: the bar lives at the bottom of the screen instead of the
+     top, and the menu (which used to drop down below it) opens upward, so
+     it still grows away from the pill rather than off the top of the
+     viewport. */
+  .nav {
+    top: auto;
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .nav-in {
+    margin: 0 var(--space-4) max(var(--hero-gap), env(safe-area-inset-bottom));
+    padding-inline: var(--space-4);
+  }
+
+  .brand {
+    padding-left: var(--space-2);
+  }
+
   .nav[data-open='true'] {
     background: var(--surface-nav);
   }
@@ -447,7 +467,7 @@
   .nav[data-open='true'] .nav-sheet {
     display: grid;
     gap: var(--space-1);
-    padding: var(--space-2) var(--rail) var(--space-6);
+    padding: var(--space-6) var(--rail) var(--space-2);
     pointer-events: auto;
   }
 
@@ -466,6 +486,12 @@
 
   .nav-sheet .btn {
     margin-top: var(--space-3);
+  }
+
+  /* Room for the pill now sitting fixed at the bottom, so the last thing on
+     the page (always the footer) does not end up underneath it. */
+  .foot {
+    padding-bottom: calc(52px + var(--space-6) + max(var(--hero-gap), env(safe-area-inset-bottom)));
   }
 }
 
