@@ -1,0 +1,22 @@
+---
+import Picture from './Picture.astro'
+import { release } from '../data/site.js'
+---
+
+<section class="band band-tight" data-tint="ink">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <h2 class="h-section">Pelton {release.version}</h2>
+    </div>
+    <div class="shot" data-parallax="50">
+      <Picture
+        base="/img/banner-2026-4"
+        alt={`Pelton ${release.version}: encryption, profiles, command palette, phishing detection, reading tabs, bulk actions, CardDAV, improved search and better sync`}
+        width={2400}
+        height={1350}
+        sizes="(max-width: 1440px) 92vw, 1360px"
+      />
+    </div>
+    <p><a class="tlink" href="/changelog">What changed</a></p>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro'
+import Hero from '../components/Hero.astro'
+import Cards from '../components/Cards.astro'
+import PaletteSection from '../components/PaletteSection.astro'
+import ThemeScroll from '../components/ThemeScroll.astro'
+import Mcp from '../components/Mcp.astro'
+import Release from '../components/Release.astro'
+import Faq from '../components/Faq.astro'
+import Cta from '../components/Cta.astro'
+import { cards, extras, faq } from '../data/site.js'
+---
+
+<Base
+  title="Pelton — Free and open-source desktop email"
+  description="Pelton is a free, open-source desktop email client for macOS, Windows and Linux. It downloads your mail to your own computer, works offline, and sends nothing to us."
+  schema="software"
+  faqItems={faq}
+>
+  <Hero />
+
+  <section class="band" id="mail">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">What it does</h2>
+      </div>
+      <Cards items={cards} />
+    </div>
+  </section>
+
+  <PaletteSection />
+
+  <section class="band band-tight">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">And the rest</h2>
+      </div>
+      <Cards items={extras} />
+    </div>
+  </section>
+
+  <ThemeScroll />
+  <Mcp />
+  <Release />
+  <Faq />
+  <Cta />
+</Base>

@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro'
+import DownloadChip from '../components/DownloadChip.astro'
+import { links } from '../data/site.js'
+---
+
+<Base
+  title="Download Pelton"
+  description="Download Pelton for macOS, Windows or Linux. Free, open source, nothing to sign up for."
+  schema="software"
+>
+  <section class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h1 class="h-section">Download</h1>
+      </div>
+
+      <div class="dl-lead">
+        <div id="dl-chip-wrap">
+          <DownloadChip mode="download" />
+        </div>
+        <p class="dl-version" id="dl-mobile-notice" hidden>
+          There is no Pelton for mobile yet.{' '}
+          <a class="tlink" href={links.releasesLatest} rel="noreferrer noopener">
+            Download anyway
+          </a>
+        </p>
+        <p class="dl-version">
+          <button type="button" class="tlink dl-textbtn" id="dl-cli-open">
+            Install from a terminal
+          </button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="dl-modal" id="dl-disclaimer" aria-labelledby="dl-disclaimer-title">
+    <h3 id="dl-disclaimer-title">Before you download</h3>
+    <p>
+      Pelton is free software distributed under the GPL-3.0, provided without warranty of any
+      kind. You install and use it entirely at your own risk. Pelton connects to your real
+      mailboxes, and actions such as deletion can be permanent. Pelton is not a backup tool: keep
+      an independent backup of anything you cannot afford to lose.
+    </p>
+    <p class="dl-modal-links">
+      <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noreferrer noopener">
+        GPL-3.0
+      </a>
+      <span>&middot;</span>
+      <a href="/terms" target="_blank" rel="noreferrer noopener">Terms and liability</a>
+    </p>
+    <label class="dl-modal-check">
+      <input type="checkbox" id="dl-disclaimer-accept" />
+      <span>
+        I accept the GPL-3.0 license and the terms and liability notice linked above, and I
+        understand that I am installing and using Pelton entirely at my own risk.
+      </span>
+    </label>
+    <div class="dl-modal-actions">
+      <button type="button" class="btn ghost" id="dl-disclaimer-cancel">Cancel</button>
+      <button type="button" class="btn accent" id="dl-disclaimer-confirm" disabled>
+        Download
+      </button>
+    </div>
+  </dialog>
+
+  <dialog class="dl-modal dl-modal-wide" id="dl-cli" aria-labelledby="dl-cli-title">
+    <h3 id="dl-cli-title">Install from a terminal</h3>
+    <div class="cli-blocks">
+      <div class="cli-block">
+        <b>Fedora, via Copr</b>
+        <div class="cli-cmd">
+          <pre><code>sudo dnf copr enable {links.coprEnable}</code></pre>
+          <button type="button" class="cli-copy" data-cli-copy>Copy</button>
+        </div>
+        <div class="cli-cmd">
+          <pre><code>sudo dnf install pelton</code></pre>
+          <button type="button" class="cli-copy" data-cli-copy>Copy</button>
+        </div>
+      </div>
+      <div class="cli-block">
+        <b>Arch, via the AUR</b>
+        <div class="cli-cmd">
+          <pre><code>yay -S pelton-bin</code></pre>
+          <button type="button" class="cli-copy" data-cli-copy>Copy</button>
+        </div>
+        <span class="cli-credit">
+          Maintained by{' '}
+          <a class="tlink" href="https://github.com/leeteral" target="_blank" rel="noreferrer noopener">
+            leeteral
+          </a>
+          {' '}(Thanks!)
+        </span>
+      </div>
+    </div>
+    <p class="dl-version">
+      Installing a .deb, .rpm or the raw binary you already downloaded? That command is on the
+      page you land on right after.
+    </p>
+    <div class="dl-modal-actions">
+      <button type="button" class="btn ghost" id="dl-cli-close">Close</button>
+    </div>
+  </dialog>
+
+  <script>
+    import { initCliModal } from '../scripts/download.js'
+    initCliModal()
+  </script>
+</Base>

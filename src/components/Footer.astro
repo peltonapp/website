@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro'
+import Mark from './Mark.astro'
+import { links, release } from '../data/site.js'
+
+const year = 2026
+---
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="/">
+          <Mark size={26} />
+          <span>Pelton</span>
+          <span class="ipa" aria-label="pronounced pelton">/&#712;p&#603;ltn&#809;/</span>
+        </a>
+        <p>
+          A free, open-source desktop email client. Your mail stays on your computer and with
+          your own provider.
+        </p>
+        <div class="foot-social">
+          <a href={links.org} rel="noreferrer noopener" aria-label="Pelton on GitHub">
+            <Icon name="brand-github" size={19} />
+          </a>
+          <a href={links.discord} aria-label="Pelton on Discord">
+            <Icon name="brand-discord" size={19} />
+          </a>
+          <a href={`mailto:${links.email}`} aria-label="Email Pelton">
+            <Icon name="mail" size={19} />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Pelton Client</h4>
+        <ul>
+          <li><a href="/download">Download</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/privacy-security">Privacy and security</a></li>
+          <li><a href="/changelog">Changelog</a></li>
+          <li><a href={links.themesSite} rel="noreferrer noopener">Theme gallery</a></li>
+          <li><a href="/design">Design system</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href={links.org} rel="noreferrer noopener">GitHub organisation</a></li>
+          <li><a href={links.client} rel="noreferrer noopener">Source code</a></li>
+          <li><a href={links.issues} rel="noreferrer noopener">Issue tracker</a></li>
+          <li><a href="/community">Contribute</a></li>
+          <li><a href={links.docs} rel="noreferrer noopener">Documentation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy policy</a></li>
+          <li><a href="/terms">Terms and liability</a></li>
+          <li><a href="/imprint">Imprint</a></li>
+          <li><a href={links.license} rel="noreferrer noopener">GPL-3.0 licence</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-note">
+      <span>&copy; {year} The Pelton Project. Released under the GNU GPL-3.0.</span>
+      <nav aria-label="Meta">
+        <a href="/changelog">v{release.version}</a>
+        <a href="/llms.txt">llms.txt</a>
+        <a href="/.well-known/security.txt">security.txt</a>
+      </nav>
+    </div>
+  </div>
+</footer>

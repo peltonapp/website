@@ -1,0 +1,42 @@
+---
+import fs from 'node:fs'
+import path from 'node:path'
+
+interface Props {
+  name: string
+  size?: number
+  stroke?: number
+  class?: string
+}
+
+const { name, size = 20, stroke = 1.9, class: cls = '' } = Astro.props
+
+const dir = path.join(process.cwd(), 'node_modules', '@tabler', 'icons', 'icons', 'outline')
+const file = path.join(dir, `${name}.svg`)
+
+if (!fs.existsSync(file)) {
+  throw new Error(`Icon not found: ${name}`)
+}
+
+const inner = fs
+  .readFileSync(file, 'utf8')
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>\s*$/, '')
+  .trim()
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  class={cls}
+  set:html={inner}
+/>

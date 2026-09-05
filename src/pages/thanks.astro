@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro'
+---
+
+<Base
+  title="Thanks for downloading Pelton"
+  description="Your download has started."
+  noindex
+>
+  <section class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h1 class="h-section">Thanks.</h1>
+      </div>
+
+      <div class="steps">
+        <div class="step" data-step="mac">
+          <b>macOS</b>
+          <span>Right-click the app in Finder, choose Open, then confirm.</span>
+        </div>
+        <div class="step" data-step="win">
+          <b>Windows</b>
+          <span>SmartScreen might show a warning. Choose More info, then Run anyway.</span>
+        </div>
+        <p class="dl-version steps-why">
+          <button type="button" class="tlink dl-textbtn" id="tx-why-open">
+            Why am I seeing this?
+          </button>
+        </p>
+      </div>
+
+      <div class="cli-block" data-install-step hidden>
+        <b>Install it</b>
+        <div data-install-cmds></div>
+      </div>
+
+      <div class="hash-box" data-hash-box hidden>
+        <b data-hash-name class="mono"></b>
+        <div class="hash-row">
+          <code class="mono" data-hash-value></code>
+          <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="hash">
+            Copy
+          </button>
+        </div>
+        <div class="hash-row">
+          <code class="mono hash-cmd" data-hash-cmd></code>
+          <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="cmd">
+            Copy
+          </button>
+        </div>
+        <div class="hash-row">
+          <code class="mono hash-cmd" data-hash-compare></code>
+          <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="compare">
+            Copy
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="dl-modal" id="tx-why" aria-labelledby="tx-why-title">
+    <h3 id="tx-why-title">Why am I seeing this?</h3>
+    <p>
+      Pelton's builds are not code-signed, so macOS Gatekeeper and Windows SmartScreen warn on
+      first launch. That's normal for software distributed outside an app store and doesn't
+      mean anything is wrong with the file. We still recommend checking the SHA-256 hash, shown
+      on the page once you're on it.
+    </p>
+    <div class="dl-modal-actions">
+      <button type="button" class="btn ghost" id="tx-why-close">Close</button>
+    </div>
+  </dialog>
+
+  <script>
+    import { fetchRelease } from '../scripts/download.js'
+    import { links } from '../data/site.js'
+
+    const PREFIX = `${links.client}/releases/download/`
+
+    function safeUrl(raw: string | null): string | null {
+      if (!raw) return null
+      try {
+        const url = new URL(raw)
+        if (url.protocol !== 'https:') return null
+        if (!url.href.startsWith(PREFIX)) return null
+        return url.href
+      } catch {
+        return null
+      }
+    }
+
+    // The plain command a visitor can run to see the hash for themselves.
+    function verifyCommand(file: string): string {
+      const ua = navigator.userAgent
+      if (/Win/i.test(ua)) return `Get-FileHash -Algorithm SHA256 .\\${file}`
+      if (/Mac/i.test(ua)) return `shasum -a 256 ${file}`
+      return `sha256sum ${file}`
+    }
+
+    // The same check, but it does the comparison itself and prints the
+    // verdict, for anyone who would rather not eyeball two long hex strings.
+    function compareCommand(file: string, digest: string): string {
+      const ua = navigator.userAgent
+      if (/Win/i.test(ua)) {
+        return `if ((Get-FileHash -Algorithm SHA256 .\\${file}).Hash -eq "${digest}") { "Match" } else { "Mismatch" }`
+      }
+      const hashCmd = /Mac/i.test(ua) ? `shasum -a 256 "${file}"` : `sha256sum "${file}"`
+      return `[ "$(${hashCmd} | cut -d' ' -f1)" = "${digest}" ] && echo Match || echo Mismatch`
+    }
+
+    // Which first-launch step is relevant to the file just downloaded: a
+    // Linux download gets neither, since Gatekeeper and SmartScreen are not
+    // its problem.
+    function osFromFile(file: string): 'mac' | 'win' | 'linux' | null {
+      if (/\.dmg$/i.test(file)) return 'mac'
+      if (/\.exe$/i.test(file)) return 'win'
+      if (/\.deb$|\.rpm$|linux-amd64$/i.test(file)) return 'linux'
+      return null
+    }
+
+    function showRelevantStep(file: string): void {
+      const os = osFromFile(file)
+      if (!os) return
+      document.querySelectorAll<HTMLElement>('[data-step]').forEach((el) => {
+        el.hidden = el.dataset.step !== os
+      })
+    }
+
+    // The exact command(s) to install the file just downloaded, not a
+    // templated version string: only shown for the formats that need a
+    // terminal step at all (a .dmg or .exe installer does not).
+    function installCommands(file: string): string[] {
+      if (file.endsWith('.deb')) return [`sudo dpkg -i ${file}`]
+      if (file.endsWith('.rpm')) return [`sudo rpm -i ${file}`]
+      if (/linux-amd64$/i.test(file)) return [`chmod +x ${file}`, `./${file}`]
+      return []
+    }
+
+    function renderInstallStep(file: string): void {
+      const commands = installCommands(file)
+      if (!commands.length) return
+      const step = document.querySelector<HTMLElement>('[data-install-step]')
+      const cmds = document.querySelector<HTMLElement>('[data-install-cmds]')
+      if (!step || !cmds) return
+
+      cmds.replaceChildren(
+        ...commands.map((cmd) => {
+          const wrap = document.createElement('div')
+          wrap.className = 'cli-cmd'
+          const pre = document.createElement('pre')
+          const code = document.createElement('code')
+          code.textContent = cmd
+          pre.append(code)
+          const btn = document.createElement('button')
+          btn.type = 'button'
+          btn.className = 'cli-copy'
+          btn.textContent = 'Copy'
+          btn.addEventListener('click', () => {
+            navigator.clipboard?.writeText(cmd).then(() => {
+              btn.textContent = 'Copied'
+              window.setTimeout(() => (btn.textContent = 'Copy'), 1200)
+            })
+          })
+          wrap.append(pre, btn)
+          return wrap
+        })
+      )
+      step.hidden = false
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    const url = safeUrl(params.get('u'))
+    const file = url ? decodeURIComponent(url.split('/').pop() || '') : ''
+
+    if (file) {
+      showRelevantStep(file)
+      renderInstallStep(file)
+    }
+
+    const box = document.querySelector<HTMLElement>('[data-hash-box]')
+    const nameEl = document.querySelector<HTMLElement>('[data-hash-name]')
+    const valueEl = document.querySelector<HTMLElement>('[data-hash-value]')
+    const cmdEl = document.querySelector<HTMLElement>('[data-hash-cmd]')
+    const compareEl = document.querySelector<HTMLElement>('[data-hash-compare]')
+
+    if (file && box && nameEl && valueEl && cmdEl && compareEl) {
+      nameEl.textContent = file
+      fetchRelease().then((rel) => {
+        const asset = rel?.assets?.find((a) => a.name === file)
+        if (!asset?.digest) {
+          valueEl.textContent = 'Not published for this file.'
+          return
+        }
+        const digest = asset.digest.replace(/^sha256:/, '')
+        valueEl.textContent = digest
+        cmdEl.textContent = verifyCommand(file)
+        compareEl.textContent = compareCommand(file, digest)
+        box.hidden = false
+
+        document.querySelectorAll<HTMLButtonElement>('[data-copy-btn]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const target = btn.dataset.copyTarget
+            const text =
+              target === 'hash' ? digest : target === 'cmd' ? cmdEl.textContent : compareEl.textContent
+            if (!text) return
+            navigator.clipboard?.writeText(text).then(() => {
+              const label = btn.textContent
+              btn.textContent = 'Copied'
+              window.setTimeout(() => (btn.textContent = label), 1200)
+            })
+          })
+        })
+      })
+    }
+
+    const why = document.getElementById('tx-why') as HTMLDialogElement | null
+    document.getElementById('tx-why-open')?.addEventListener('click', () => why?.showModal())
+    document.getElementById('tx-why-close')?.addEventListener('click', () => why?.close())
+    why?.addEventListener('click', (e) => {
+      if (e.target === why) why.close()
+    })
+  </script>
+</Base>

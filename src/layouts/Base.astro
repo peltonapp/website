@@ -1,0 +1,133 @@
+---
+import '../styles/app.css'
+import Nav from '../components/Nav.astro'
+import Footer from '../components/Footer.astro'
+import { site, release } from '../data/site.js'
+
+interface Props {
+  title: string
+  description: string
+  noindex?: boolean
+  ogImage?: string
+  schema?: 'software' | 'faq' | 'none'
+  faqItems?: { q: string; a: string }[]
+  lang?: string
+}
+
+const {
+  title,
+  description,
+  noindex = false,
+  ogImage = '/img/banner-2026-4.png',
+  schema = 'none',
+  faqItems = [],
+  lang = 'en',
+} = Astro.props
+
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href
+const ogUrl = new URL(ogImage, Astro.site).href
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Pelton',
+  applicationCategory: 'CommunicationApplication',
+  applicationSubCategory: 'Email Client',
+  operatingSystem: 'macOS, Windows, Linux',
+  softwareVersion: release.version,
+  description,
+  url: site.url,
+  downloadUrl: `${site.url}/download`,
+  license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  author: { '@type': 'Organization', name: site.vendor, url: site.url },
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta name="theme-color" content="#111214" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link
+      rel="preload"
+      href="/fonts/familjen-grotesk-latin-700-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/familjen-grotesk-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pelton" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1350" />
+    <meta property="og:locale" content={lang} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    {
+      schema === 'software' && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(softwareSchema)}
+        />
+      )
+    }
+    {
+      faqItems.length > 0 && (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { initScroll } from '../scripts/scroll.js'
+      initScroll()
+    </script>
+  </body>
+</html>

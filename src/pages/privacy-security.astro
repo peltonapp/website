@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro'
+import Cards from '../components/Cards.astro'
+import { privacyCards, mcpCards } from '../data/site.js'
+---
+
+<Base
+  title="Privacy and security — Pelton"
+  description="What leaves your machine when you use Pelton, and what does not. No telemetry, blocked tracking pixels, local encryption keys, and an MCP server that ships off and starts read-only."
+>
+  <section class="band">
+    <div class="wrap sec">
+      <div class="sec-head wide">
+        <h1 class="h-section">Nothing leaves unless you send it</h1>
+        <p class="lead">
+          This page is about the app. The <a class="tlink" href="/privacy">privacy policy</a> covers
+          this website.
+        </p>
+      </div>
+      <Cards items={privacyCards} cols="cols-3" />
+    </div>
+  </section>
+
+  <section class="band band-tight" data-tint="sunken" id="mcp">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">The MCP server</h2>
+      </div>
+      <Cards items={mcpCards} cols="cols-3" />
+    </div>
+  </section>
+</Base>

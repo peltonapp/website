@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro'
+import Mark from './Mark.astro'
+import { nav } from '../data/site.js'
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/'
+const isCurrent = (href: string) => href !== '/' && !href.startsWith('/#') && path === href
+---
+
+<header class="nav" id="site-nav">
+  <div class="nav-in">
+    <a class="brand" href="/" aria-label="Pelton, home">
+      <Mark size={26} />
+      <span>Pelton</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav-cta">
+      <a class="btn accent sm" href="/download">Download</a>
+    </div>
+
+    <button
+      class="nav-burger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-sheet"
+      aria-label="Open menu"
+    >
+      <Icon name="menu-2" size={20} stroke={2} />
+    </button>
+  </div>
+
+  <nav class="nav-sheet" id="nav-sheet" aria-label="Main">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a class="btn accent" href="/download">Download</a>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('site-nav')
+  const burger = header?.querySelector<HTMLButtonElement>('.nav-burger')
+
+  burger?.addEventListener('click', () => {
+    const open = header?.dataset.open === 'true'
+    if (header) header.dataset.open = open ? 'false' : 'true'
+    burger.setAttribute('aria-expanded', open ? 'false' : 'true')
+    burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu')
+  })
+
+  header?.querySelectorAll('.nav-sheet a').forEach((a) =>
+    a.addEventListener('click', () => {
+      if (header) header.dataset.open = 'false'
+      burger?.setAttribute('aria-expanded', 'false')
+    })
+  )
+
+  const hero = document.querySelector<HTMLElement>('.hero')
+
+  if (header) {
+    header.style.setProperty('--nav-bg-o', '0')
+    let raf = 0
+    const update = () => {
+      raf = 0
+      // the pill narrows over the first stretch of any page's scroll, and the
+      // background fades from transparent to solid over the same stretch,
+      // on every page; a hero just gives it a taller, slower fade so it
+      // clears the art before the bar goes solid
+      const shrinkP = Math.min(Math.max(window.scrollY / 300, 0), 1)
+      header.style.setProperty('--nav-shrink', `${(shrinkP * 64).toFixed(1)}px`)
+
+      const fadeOver = hero ? hero.offsetHeight || 1 : 300
+      const bgP = Math.min(Math.max(window.scrollY / fadeOver, 0), 1)
+      header.style.setProperty('--nav-bg-o', bgP.toFixed(3))
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+  }
+</script>

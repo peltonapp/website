@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro'
+import Picture from '../components/Picture.astro'
+import Icon from '../components/Icon.astro'
+import { changelog, links, release } from '../data/site.js'
+---
+
+<Base
+  title="Changelog — Pelton"
+  description={`What changed in each Pelton release, starting with ${release.version}.`}
+>
+  <section class="band band-tight">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h1 class="h-section">Changelog</h1>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn accent" href="/download">
+          <Icon name="download" size={18} stroke={2} />
+          Download {release.version}
+        </a>
+        <a class="btn" href={links.releases} rel="noreferrer noopener">
+          Every release on GitHub
+        </a>
+      </div>
+
+      <div class="log">
+        {
+          changelog.map((c) => (
+            <article class={`log-entry${c.patch ? ' is-patch' : ''}`}>
+              <div class="log-meta">
+                <p class="log-ver">{c.version}</p>
+                <p class="log-date">{c.date}</p>
+                <a
+                  class="tlink"
+                  href={`${links.releases}/tag/v${c.version}`}
+                  rel="noreferrer noopener"
+                >
+                  Full notes
+                </a>
+              </div>
+              <div>
+                {c.banner && (
+                  <div class="shot" style="margin-bottom:var(--space-6)" data-parallax="26">
+                    <Picture
+                      base={c.banner}
+                      alt={`Pelton ${c.version} release banner`}
+                      width={2400}
+                      height={1350}
+                      sizes="(max-width: 1000px) 92vw, 940px"
+                    />
+                  </div>
+                )}
+                <ul class="log-list">
+                  {c.items.map((it) => (
+                    <li>{it}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>

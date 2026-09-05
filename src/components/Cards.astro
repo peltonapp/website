@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro'
+
+interface Props {
+  items: { icon: string; title: string; body: string; span?: number; visual?: string }[]
+  cols?: string
+}
+
+const { items, cols = 'cols-4' } = Astro.props
+
+const flags = [1, 2, 3, 4, 5, 6, 7, 8]
+const os = ['brand-apple', 'brand-windows', 'brand-debian']
+---
+
+<div class={`grid ${cols}`}>
+  {
+    items.map((b, i) => (
+      <article class={`tile${b.span === 2 ? ' span-2' : ''}`} data-rise={String((i % 4) * 0.25)}>
+        <div class="tile-mark">
+          <Icon name={b.icon} size={220} stroke={1.4} />
+        </div>
+        <h3>{b.title}</h3>
+        <p>{b.body}</p>
+
+        {b.visual === 'flags' && (
+          <div class="flagbar">
+            {flags.map((n) => (
+              <i style={`--c:var(--flag-${n})`} />
+            ))}
+          </div>
+        )}
+
+        {b.visual === 'os' && (
+          <div class="osrow">
+            {os.map((o) => (
+              <Icon name={o} size={28} stroke={1.5} />
+            ))}
+          </div>
+        )}
+      </article>
+    ))
+  }
+</div>

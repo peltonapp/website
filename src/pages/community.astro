@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro'
+import Icon from '../components/Icon.astro'
+import { links } from '../data/site.js'
+
+const ways = [
+  {
+    icon: 'bug',
+    title: 'Bug reports',
+    body: 'There is no crash reporting, so a written issue is the only way a bug reaches us. Version, platform and steps are enough.',
+    href: links.issues,
+    cta: 'Open an issue',
+  },
+  {
+    icon: 'code',
+    title: 'Code',
+    body: 'The client, this website and the theme gallery are all public. Issues tagged good first issue are a reasonable way in.',
+    href: links.client,
+    cta: 'The repository',
+  },
+  {
+    icon: 'brand-discord',
+    title: 'Discord',
+    body: 'Where releases get discussed before they ship, and where a broken IMAP server gets sorted out fastest.',
+    href: links.discord,
+    cta: 'Join',
+  },
+  {
+    icon: 'palette',
+    title: 'Themes',
+    body: 'A theme is a set of CSS variables. Write one, export it, and it can go in the gallery.',
+    href: links.themesSite,
+    cta: 'The gallery',
+  },
+  {
+    icon: 'language',
+    title: 'Translation',
+    body: 'Interface strings live in the repository. A new language starts as one file.',
+    href: links.client,
+    cta: 'The repository',
+  },
+  {
+    icon: 'shield-lock',
+    title: 'Security',
+    body: 'Found something that should not be public? The policy has the contact and the disclosure window.',
+    href: links.security,
+    cta: 'Security policy',
+  },
+]
+---
+
+<Base
+  title="Contribute to Pelton"
+  description="Pelton is built in the open under GPL-3.0. Report bugs, write a theme, translate the interface, or read the source."
+>
+  <section class="band">
+    <div class="wrap sec">
+      <div class="sec-head wide">
+        <h1 class="h-section">Built in the open.</h1>
+      </div>
+
+      <div class="grid cols-3">
+        {
+          ways.map((w, i) => (
+            <article class="tile" data-rise={String((i % 3) * 0.2)}>
+              <div class="tile-mark">
+                <Icon name={w.icon} size={220} stroke={1.4} />
+              </div>
+              <h3>{w.title}</h3>
+              <p>{w.body}</p>
+              <p>
+                <a class="tlink" href={w.href} rel="noreferrer noopener">
+                  {w.cta}
+                </a>
+              </p>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="lead">
+        The client is Go with a Svelte interface in the system webview. Clone the repository,
+        install the Wails CLI, and <code class="mono">make dev</code> gets you a running window.
+        The README has the platform prerequisites.
+      </p>
+
+      <p>
+        <a class="tlink" href={links.org} rel="noreferrer noopener">GitHub organisation</a>
+        &nbsp;&middot;&nbsp;
+        <a class="tlink" href={links.docs} rel="noreferrer noopener">Documentation</a>
+        &nbsp;&middot;&nbsp;
+        <a class="tlink" href={links.conduct} rel="noreferrer noopener">Code of conduct</a>
+      </p>
+    </div>
+  </section>
+</Base>

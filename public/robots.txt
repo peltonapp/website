@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /thanks
+Disallow: /privacy
+Disallow: /terms
+Disallow: /imprint
+
+Sitemap: https://pelton.app/sitemap-index.xml

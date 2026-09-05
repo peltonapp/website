@@ -1,0 +1,269 @@
+---
+import Base from '../layouts/Base.astro'
+import ColorWall from '../components/ColorWall.astro'
+import Icon from '../components/Icon.astro'
+
+const surfaces = [
+  { name: 'Base', hex: '#111214', light: '#f6f6f7' },
+  { name: 'Raised', hex: '#1a1c1f', light: '#ffffff' },
+  { name: 'Overlay', hex: '#222428', light: '#ffffff' },
+  { name: 'Sunken', hex: '#161719', light: '#efeff1' },
+  { name: 'Hover', hex: '#25282d', light: '#ececef' },
+  { name: 'Text', hex: '#ecedee', light: '#1a1b1e' },
+  { name: 'Text muted', hex: '#b4b7bd', light: '#4a4d54' },
+  { name: 'Text faint', hex: '#7e828b', light: '#797d86' },
+]
+
+const accents = [
+  { name: 'Pelton blue', hex: '#465AF2' },
+  { name: 'Graphite', hex: '#5B6470' },
+  { name: 'Pine', hex: '#3A7D5D' },
+  { name: 'Clay', hex: '#9A5B3A' },
+  { name: 'Violet', hex: '#7A4FB5' },
+  { name: 'Rose', hex: '#B5476A' },
+  { name: 'Teal', hex: '#2E8C9E' },
+  { name: 'Amber', hex: '#C28A1E' },
+]
+
+const semantic = [
+  { name: 'Success', hex: '#3fb27a', light: '#1a7f4b' },
+  { name: 'Warning', hex: '#d9a441', light: '#9a6700' },
+  { name: 'Danger', hex: '#e5675a', light: '#c0392b' },
+  { name: 'Nightly', hex: '#c98cea', light: '#8b3cc0' },
+]
+
+const flags = [
+  { name: '1. Red', hex: '#E5484D' },
+  { name: '2. Orange', hex: '#F76B15' },
+  { name: '3. Yellow', hex: '#FFB224' },
+  { name: '4. Green', hex: '#30A46C' },
+  { name: '5. Teal', hex: '#12A594' },
+  { name: '6. Blue', hex: '#3E63DD' },
+  { name: '7. Purple', hex: '#8E4EC6' },
+  { name: '8. Pink', hex: '#E93D82' },
+]
+
+const views = [
+  { name: 'Red', hex: '#e5484d' },
+  { name: 'Orange', hex: '#f76b15' },
+  { name: 'Amber', hex: '#ffb224' },
+  { name: 'Green', hex: '#30a46c' },
+  { name: 'Teal', hex: '#12a594' },
+  { name: 'Blue', hex: '#0091ff' },
+  { name: 'Indigo', hex: '#3e63dd' },
+  { name: 'Purple', hex: '#8e4ec6' },
+  { name: 'Pink', hex: '#e93d82' },
+]
+
+const type = [
+  { v: '11px', use: 'Meta lines' },
+  { v: '12px', use: 'Labels' },
+  { v: '13px', use: 'Message list rows' },
+  { v: '14px', use: 'Body, the default' },
+  { v: '16px', use: 'Headings' },
+  { v: '20px', use: 'Titles' },
+]
+
+const density = [
+  { n: 'Row padding, vertical', c: '5px', m: '8px', x: '13px' },
+  { n: 'Row padding, horizontal', c: '10px', m: '12px', x: '16px' },
+  { n: 'Row gap', c: '2px', m: '3px', x: '5px' },
+  { n: 'List line height', c: '1.3', m: '1.4', x: '1.55' },
+  { n: 'Pane padding', c: '12px', m: '16px', x: '22px' },
+  { n: 'Control height', c: '27px', m: '30px', x: '34px' },
+  { n: 'Stack gap', c: '8px', m: '10px', x: '14px' },
+]
+
+const downloads = [
+  {
+    name: 'Mark',
+    art: '/img/pelton-mark.png',
+    files: [
+      { label: 'PNG', href: '/img/pelton-mark.png' },
+      { label: 'WebP', href: '/img/pelton-mark.webp' },
+      { label: 'AVIF', href: '/img/pelton-mark.avif' },
+    ],
+  },
+  {
+    name: 'App icon',
+    art: '/img/pelton-appicon.png',
+    files: [
+      { label: 'PNG 1024', href: '/img/pelton-appicon.png' },
+      { label: 'WebP', href: '/img/pelton-appicon.webp' },
+    ],
+  },
+  {
+    name: 'Rainbow',
+    art: '/img/pelton-themes-mark.png',
+    files: [
+      { label: 'PNG', href: '/img/pelton-themes-mark.png' },
+      { label: 'WebP', href: '/img/pelton-themes-mark.webp' },
+      { label: 'AVIF', href: '/img/pelton-themes-mark.avif' },
+    ],
+  },
+]
+---
+
+<Base
+  title="Design system — Pelton"
+  description="Pelton's colors, type scale, spacing, density and logo files."
+>
+  <section class="band band-tight">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h1 class="h-section">Design system</h1>
+      </div>
+    </div>
+  </section>
+
+  <ColorWall title="Surfaces and text" colors={surfaces} />
+  <ColorWall title="Accents" colors={accents} />
+  <ColorWall title="Status" colors={semantic} />
+  <ColorWall title="Flag colors" colors={flags} />
+  <ColorWall title="View colors" colors={views} />
+
+  <section class="band band-tight" data-tint="sunken" id="type">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">Type</h2>
+      </div>
+
+      <div class="ds-fonts">
+        <p style="font-size:clamp(1.6rem,3vw,2.6rem);font-weight:500;letter-spacing:-0.035em">
+          Familjen Grotesk
+        </p>
+        <p class="mono" style="font-size:clamp(1.4rem,2.6vw,2.2rem)">Spline Sans Mono</p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="spec">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Use</th>
+              <th>Sample</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              type.map((t) => (
+                <tr>
+                  <td>{t.v}</td>
+                  <td>{t.use}</td>
+                  <td style={`font-size:${t.v}`}>Q4 potato numbers</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-tight" id="space">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">Spacing</h2>
+      </div>
+
+      <div class="ds-space">
+        {
+          [2, 4, 8, 12, 16, 24].map((v) => (
+            <div class="ds-space-row">
+              <span class="mono">{v}px</span>
+              <i style={`--w:${v * 8}px`} />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="scroll-x">
+        <table class="spec">
+          <thead>
+            <tr>
+              <th>Density</th>
+              <th>Compact</th>
+              <th>Medium</th>
+              <th>Luxe</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              density.map((d) => (
+                <tr>
+                  <td>{d.n}</td>
+                  <td>{d.c}</td>
+                  <td>{d.m}</td>
+                  <td>{d.x}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scroll-x">
+        <table class="spec">
+          <thead>
+            <tr>
+              <th>Corners</th>
+              <th>Square</th>
+              <th>Default</th>
+              <th>Round</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Controls</td>
+              <td>0</td>
+              <td>5px</td>
+              <td>10px</td>
+            </tr>
+            <tr>
+              <td>Cards</td>
+              <td>0</td>
+              <td>5px</td>
+              <td>12px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-tight" data-tint="sunken" id="logo">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <h2 class="h-section">Logo</h2>
+      </div>
+
+      <div class="grid cols-3">
+        {
+          downloads.map((d) => (
+            <div class="dlogo">
+              <div class="dlogo-art">
+                <img src={d.art} alt={`${d.name} artwork`} width="120" height="120" loading="lazy" />
+              </div>
+              <div class="dlogo-meta">
+                <b>{d.name}</b>
+              </div>
+              <div class="dlogo-files">
+                {d.files.map((f) => (
+                  <a href={f.href} download>
+                    {f.label}
+                    <Icon name="download" size={15} stroke={2} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { initWalls } from '../scripts/wall.js'
+    initWalls()
+  </script>
+</Base>

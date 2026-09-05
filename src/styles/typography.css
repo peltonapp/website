@@ -1,0 +1,57 @@
+.display {
+  font-size: var(--fz-display);
+  font-weight: var(--fw-medium);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.h-section {
+  font-size: var(--fz-section);
+  font-weight: var(--fw-medium);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+
+.h-sub {
+  font-size: clamp(1.25rem, 0.95rem + 1.1vw, 1.75rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.lead {
+  font-size: var(--fz-lead);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.label {
+  font-size: var(--fz-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tlink {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent);
+  transition: text-decoration-color 0.15s var(--ease-out);
+}
+
+.tlink:hover {
+  text-decoration-color: currentColor;
+}

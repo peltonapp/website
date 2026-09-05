@@ -1,0 +1,17 @@
+---
+import Cards from './Cards.astro'
+import { mcpCards } from '../data/site.js'
+---
+
+<section class="band band-tight" id="mcp">
+  <div class="wrap sec">
+    <div class="sec-head wide">
+      <h2 class="h-section">Pelton can talk to an agent you run</h2>
+      <p class="lead">
+        It ships off, binds to your own machine, and starts read-only. Pelton itself contains no
+        model and calls no AI service.
+      </p>
+    </div>
+    <Cards items={mcpCards} cols="cols-3" />
+  </div>
+</section>

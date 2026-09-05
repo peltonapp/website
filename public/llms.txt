@@ -1,0 +1,66 @@
+# Pelton
+
+> Pelton is a free and open-source desktop email client for macOS, Windows and Linux.
+> Mail is downloaded to the user's own machine and stored in a local database alongside
+> their own IMAP provider. There is no Pelton account, no Pelton server, and no telemetry.
+> Licensed GPL-3.0.
+
+Built with Go and Wails, with a Svelte interface rendered in the system webview rather than
+a bundled browser. The current release is 2026.4.
+
+## What it does
+
+- Standard IMAP and SMTP, so it works with most providers without a plugin
+- Unified inbox across multiple accounts, plus per-account folder trees
+- Offline: cache recent mail for a chosen timeframe, pin individual messages permanently
+- Local full-text search that works with the network off
+- PGP and S/MIME, both off until enabled, with all key handling local
+- Phishing checks: SPF, DKIM and DMARC results, display-name spoofing, off-domain Reply-To,
+  lookalike sender domains
+- Remote images and tracking pixels blocked by default, allowed per message
+- Eight colored flags, local or synced as IMAP $Label1 through $Label8
+- Saved Views: a search that opens like a folder, with a live count
+- Command palette on Cmd+K over folders, views, messages, settings and menu actions
+- Profiles: separate settings, accounts, flags and sidebar layout per context
+- Snooze, send later, reading tabs, bulk actions, CardDAV
+- Native notifications via Notification Center, Windows toasts and Linux dbus
+- Themes built from CSS variables, with a color picker, custom CSS and one-file export
+- Vim mode, rebindable shortcuts, configurable trackpad swipes
+- Three density settings and three corner styles
+
+## Privacy
+
+- The app makes no request to any server operated by the Pelton project
+- No telemetry, no analytics, no automated crash reporting
+- No account, no license check, no forced update ping
+- Mail lives in a local database file the user can delete outright
+
+## MCP server
+
+Pelton can run a local Model Context Protocol server so an agent the user already runs can
+read the mail cached on their machine. It is off by default, binds to 127.0.0.1 only, and
+starts read-only with five read tools. Seven write tools (mark_read, move_message,
+archive_message, flag_message, set_flag_color, delete_message, send_message) are granted
+one at a time and all start off. send_message queues a draft for human approval and does
+not put mail on the wire. delete_message moves to trash. Attachment file contents are never
+returned, only names, types and sizes. Pelton itself contains no model and calls no AI
+provider.
+
+## Pages
+
+- [Home](https://pelton.app/): overview and features
+- [Download](https://pelton.app/download): builds for macOS, Windows and Linux
+- [Privacy and security](https://pelton.app/privacy-security): what leaves the machine and what does not
+- [Changelog](https://pelton.app/changelog): what changed per release
+- [Community](https://pelton.app/community): contributing, source, Discord
+- [Design system](https://pelton.app/design): color, type, spacing, density and logo tokens
+
+## Project
+
+- Source: https://github.com/TRC-Loop/Pelton
+- Organisation: https://github.com/peltonapp
+- Releases: https://github.com/TRC-Loop/Pelton/releases
+- Documentation: https://docs.pelton.app
+- Theme gallery: https://themes.pelton.app
+- Licence: GPL-3.0
+- Contact: contact@pelton.app

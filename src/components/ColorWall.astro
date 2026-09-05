@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string
+  colors: { name: string; hex: string; light?: string }[]
+}
+
+const { title, colors } = Astro.props
+
+// Same rule the client uses for --accent-fg: compare WCAG contrast against
+// black and white and take whichever wins, so a label stays legible on any hex.
+function channel(v: number): number {
+  const c = v / 255
+  return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+}
+
+function luminance(hex: string): number {
+  const h = hex.replace('#', '')
+  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h
+  const r = parseInt(full.slice(0, 2), 16)
+  const g = parseInt(full.slice(2, 4), 16)
+  const b = parseInt(full.slice(4, 6), 16)
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b)
+}
+
+function ink(hex: string): string {
+  const l = luminance(hex)
+  const onWhite = 1.05 / (l + 0.05)
+  const onBlack = (l + 0.05) / 0.05
+  return onBlack >= onWhite ? '#000000' : '#ffffff'
+}
+---
+
+<section class="wall">
+  <div class="wall-head">
+    <h2 class="h-section">{title}</h2>
+  </div>
+  <div class="wall-cols" data-wall>
+    {
+      colors.map((c, i) => (
+        <button
+          class="wall-col"
+          type="button"
+          style={`--c:${c.hex};--ink:${ink(c.hex)};--i:${i}`}
+          data-copy={c.hex}
+          aria-label={`Copy ${c.hex}`}
+        >
+          <span class="wall-name">{c.name}</span>
+          <span class="wall-hex mono">{c.hex.toUpperCase()}</span>
+          {c.light && <span class="wall-alt mono">light {c.light.toUpperCase()}</span>}
+          <span class="wall-copied">Copied</span>
+        </button>
+      ))
+    }
+  </div>
+</section>

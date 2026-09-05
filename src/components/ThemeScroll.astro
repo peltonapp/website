@@ -1,0 +1,48 @@
+---
+import Picture from './Picture.astro'
+import { links } from '../data/site.js'
+
+const themes = ['default', 'slate', 'teal', 'forest', 'violet']
+---
+
+<section class="band band-tight" data-tint="sunken" id="themes">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <h2 class="h-section">Themes</h2>
+    </div>
+  </div>
+
+  <div class="pin">
+    <div class="pin-stage">
+      <div class="wrap">
+        <div class="pin-frames" style="aspect-ratio:1400/934">
+          {
+            themes.map((key, i) => (
+              <div class="pin-frame" data-active={i === 0}>
+                <Picture
+                  base={`/img/pelton-theme-${key}`}
+                  alt="Pelton shown with a different theme"
+                  width={1400}
+                  height={934}
+                  sizes="(max-width: 1000px) 92vw, 900px"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            ))
+          }
+        </div>
+        <div class="pin-caps" data-count="5">
+          {themes.map((_, i) => <div class="pin-cap" data-active={i === 0} />)}
+        </div>
+      </div>
+    </div>
+    <div class="pin-spacer" />
+  </div>
+
+  <div class="wrap">
+    <p class="dl-version">
+      Some of these are community themes, not all included with Pelton. More at{' '}
+      <a class="tlink" href={links.themesSite} rel="noreferrer noopener">themes.pelton.app</a>.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+---
+import Picture from './Picture.astro'
+import Icon from './Icon.astro'
+import { release } from '../data/site.js'
+---
+
+<section class="hero">
+  <div class="hero-panel">
+    <div class="hero-art">
+      <Picture
+        base="/img/screenshot"
+        alt="The Pelton window: three accounts in the sidebar, a message list with colored flags, and an open message in the reading pane"
+        width={2784}
+        height={1928}
+        loading="eager"
+        fetchpriority="high"
+        sizes="(max-width: 900px) 100vw, 1000px"
+      />
+    </div>
+
+    <div class="hero-copy">
+      <h1 class="lines">
+        <span><span>Free and</span></span>
+        <span><span>open-source</span></span>
+        <span><span>desktop email.</span></span>
+      </h1>
+    </div>
+
+    <a class="hero-dock" href="/download">
+      <Icon name="download" size={22} stroke={2} />
+      <span class="hero-dock-text">
+        <span>Download</span>
+        <small>Version {release.version}</small>
+      </span>
+    </a>
+  </div>
+</section>

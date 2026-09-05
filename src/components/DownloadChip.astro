@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro'
+import { links, release } from '../data/site.js'
+
+interface Props {
+  mode?: 'link' | 'download'
+}
+
+const { mode = 'link' } = Astro.props
+
+const builds = [
+  { key: 'mac-arm', name: 'macOS', hint: 'Apple Silicon', icon: 'brand-apple' },
+  { key: 'mac-intel', name: 'macOS', hint: 'Intel', icon: 'brand-apple' },
+  { key: 'win', name: 'Windows', hint: 'Installer', icon: 'brand-windows' },
+  { key: 'deb', name: 'Linux', hint: '.deb', icon: 'brand-debian' },
+  { key: 'rpm', name: 'Linux', hint: '.rpm', icon: 'brand-redhat' },
+  { key: 'bin', name: 'Linux', hint: 'Binary', icon: 'terminal' },
+]
+---
+
+{
+  mode === 'link' ? (
+    <a class="chip is-solo" href="/download">
+      <span class="chip-main">
+        <Icon name="download" size={23} stroke={1.9} />
+        <span class="chip-text">
+          <span>Download</span>
+          <small>Version {release.version}</small>
+        </span>
+      </span>
+    </a>
+  ) : (
+    <div class="chip" data-chip data-mode="download">
+      <a class="chip-main" href={links.releasesLatest} data-chip-main rel="noreferrer noopener">
+        <Icon name="download" size={19} stroke={2} />
+        <span class="chip-text">
+          <span data-chip-label>Download</span>
+          <small>Version {release.version}</small>
+        </span>
+      </a>
+      <span class="chip-split" />
+      <button
+        class="chip-more"
+        type="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label="Other downloads"
+        data-chip-more
+      >
+        <Icon name="chevron-down" size={17} stroke={2.2} />
+      </button>
+
+      <div class="chip-menu" data-chip-menu hidden>
+        {builds.map((b) => (
+          <a href={links.releasesLatest} data-build={b.key} rel="noreferrer noopener">
+            <Icon name={b.icon} size={17} stroke={1.8} />
+            {b.name}
+            <i>{b.hint}</i>
+          </a>
+        ))}
+        <hr />
+        <a href={links.copr} rel="noreferrer noopener">
+          <Icon name="package" size={17} stroke={1.8} />
+          Fedora Copr
+          <i>{links.coprEnable}</i>
+        </a>
+        <a href={links.releases} rel="noreferrer noopener">
+          <Icon name="external-link" size={17} stroke={1.8} />
+          All releases
+          <i>GitHub</i>
+        </a>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  import { initChips } from '../scripts/download.js'
+  initChips()
+</script>

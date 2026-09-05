@@ -1,0 +1,109 @@
+:root {
+  color-scheme: dark;
+
+  --font-ui: 'Familjen Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --fz-meta: 11px;
+  --fz-label: 12px;
+  --fz-list: 13px;
+  --fz-body: 14px;
+  --fz-heading: 16px;
+  --fz-title: 20px;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+
+  --row-pad-y: 8px;
+  --row-pad-x: 12px;
+  --row-gap: 3px;
+  --list-line-height: 1.4;
+  --pane-pad: 16px;
+  --control-height: 30px;
+  --stack-gap: 10px;
+
+  --radius-control: 5px;
+  --radius-card: 5px;
+  --radius-none: 0;
+
+  --hairline: 0.5px;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  --accent: #465af2;
+  --accent-fg: #ffffff;
+  --selection-bg: color-mix(in srgb, var(--accent) 22%, transparent);
+  --selection-bg-strong: color-mix(in srgb, var(--accent) 32%, transparent);
+  --link: color-mix(in srgb, var(--accent) 72%, white);
+
+  --surface-base: #111214;
+  --surface-raised: #1a1c1f;
+  --surface-overlay: #222428;
+  --surface-sunken: #161719;
+  --surface-hover: #25282d;
+  --surface-hero: #22252a;
+  --surface-nav: #1b1d21;
+
+  --text-primary: #ecedee;
+  --text-secondary: #b4b7bd;
+  --text-tertiary: #7e828b;
+  --text-inverse: #ffffff;
+
+  --success: #3fb27a;
+  --success-bg: color-mix(in srgb, #3fb27a 16%, transparent);
+  --warning: #d9a441;
+  --warning-bg: color-mix(in srgb, #d9a441 16%, transparent);
+  --danger: #e5675a;
+  --danger-bg: color-mix(in srgb, #e5675a 16%, transparent);
+  --nightly: #c98cea;
+  --nightly-bg: color-mix(in srgb, #b965e2 22%, transparent);
+
+  --scrim: rgba(0, 0, 0, 0.55);
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --flag-1: #e5484d;
+  --flag-2: #f76b15;
+  --flag-3: #ffb224;
+  --flag-4: #30a46c;
+  --flag-5: #12a594;
+  --flag-6: #3e63dd;
+  --flag-7: #8e4ec6;
+  --flag-8: #e93d82;
+
+  --view-red: #e5484d;
+  --view-orange: #f76b15;
+  --view-amber: #ffb224;
+  --view-green: #30a46c;
+  --view-teal: #12a594;
+  --view-blue: #0091ff;
+  --view-indigo: #3e63dd;
+  --view-purple: #8e4ec6;
+  --view-pink: #e93d82;
+
+  --fz-display: clamp(3rem, 0.6rem + 8.4vw, 9rem);
+  --fz-section: clamp(2rem, 0.9rem + 4vw, 4.5rem);
+  --fz-lead: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --measure: 62ch;
+  --band-pad: clamp(5rem, 11vw, 12rem);
+  --shell: 1440px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --rail: max(var(--gutter), calc((100vw - var(--shell)) / 2));
+
+  --hero-gap: clamp(14px, 1.7vw, 28px);
+  --hero-inset: var(--hero-gap);
+  --hero-pad: calc(var(--rail) - var(--hero-inset));
+}

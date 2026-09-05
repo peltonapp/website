@@ -1,0 +1,21 @@
+---
+import { faq } from '../data/site.js'
+---
+
+<section class="band band-tight" id="faq">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <h2 class="h-section">FAQ</h2>
+    </div>
+    <div class="faq">
+      {
+        faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p class="faq-a">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
