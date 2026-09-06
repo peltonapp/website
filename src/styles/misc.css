@@ -24,9 +24,9 @@
   grid-row: 1;
   align-self: center;
   position: relative;
-  width: 138%;
+  height: min(54svh, 560px);
+  width: auto;
   aspect-ratio: 1400 / 936;
-  max-height: min(54svh, 560px);
   border-radius: 12px;
   overflow: hidden;
   transform: translate3d(0, var(--art-y, 0px), 0) scale(var(--art-s, 1));
@@ -163,6 +163,7 @@
   .hero-art {
     grid-column: 1;
     grid-row: 2;
+    height: auto;
     width: calc(100% + clamp(1.5rem, 3.5vw, 3.5rem));
     margin-top: clamp(2rem, 6vw, 3rem);
   }
