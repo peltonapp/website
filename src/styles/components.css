@@ -510,9 +510,9 @@
 
 .foot-mark {
   position: absolute;
-  right: clamp(-80px, -4vw, -20px);
-  bottom: 0;
-  width: clamp(360px, 34vw, 560px);
+  right: clamp(-140px, -8vw, -70px);
+  bottom: 40px;
+  width: clamp(440px, 42vw, 680px);
   height: auto;
   transform: translateY(75%);
   filter: grayscale(1);
