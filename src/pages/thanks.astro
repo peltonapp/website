@@ -98,21 +98,21 @@ import Base from '../layouts/Base.astro'
     }
 
     // The plain command a visitor can run to see the hash for themselves.
-    function verifyCommand(file: string): string {
-      const ua = navigator.userAgent
-      if (/Win/i.test(ua)) return `Get-FileHash -Algorithm SHA256 .\\${file}`
-      if (/Mac/i.test(ua)) return `shasum -a 256 ${file}`
+    // Keyed off the file they downloaded, not their own OS: someone can
+    // perfectly well download the .exe from a Mac to hand to a Windows box.
+    function verifyCommand(file: string, os: 'mac' | 'win' | 'linux' | null): string {
+      if (os === 'win') return `Get-FileHash -Algorithm SHA256 .\\${file}`
+      if (os === 'mac') return `shasum -a 256 ${file}`
       return `sha256sum ${file}`
     }
 
     // The same check, but it does the comparison itself and prints the
     // verdict, for anyone who would rather not eyeball two long hex strings.
-    function compareCommand(file: string, digest: string): string {
-      const ua = navigator.userAgent
-      if (/Win/i.test(ua)) {
+    function compareCommand(file: string, digest: string, os: 'mac' | 'win' | 'linux' | null): string {
+      if (os === 'win') {
         return `if ((Get-FileHash -Algorithm SHA256 .\\${file}).Hash -eq "${digest}") { "Match" } else { "Mismatch" }`
       }
-      const hashCmd = /Mac/i.test(ua) ? `shasum -a 256 "${file}"` : `sha256sum "${file}"`
+      const hashCmd = os === 'mac' ? `shasum -a 256 "${file}"` : `sha256sum "${file}"`
       return `[ "$(${hashCmd} | cut -d' ' -f1)" = "${digest}" ] && echo Match || echo Mismatch`
     }
 
@@ -209,14 +209,15 @@ import Base from '../layouts/Base.astro'
           return
         }
         const digest = asset.digest.replace(/^sha256:/, '')
+        const os = osFromFile(file)
         valueEl.textContent = digest
-        cmdEl.textContent = verifyCommand(file)
-        compareEl.textContent = compareCommand(file, digest)
+        cmdEl.textContent = verifyCommand(file, os)
+        compareEl.textContent = compareCommand(file, digest, os)
         box.hidden = false
 
         // Get-FileHash needs PowerShell, so plain cmd.exe users need a
         // different command and both need a label to tell them apart.
-        if (/Win/i.test(navigator.userAgent) && cmdAltRow && cmdAltLabelEl && cmdAltEl) {
+        if (os === 'win' && cmdAltRow && cmdAltLabelEl && cmdAltEl) {
           if (cmdLabelEl) {
             cmdLabelEl.textContent = 'In PowerShell:'
             cmdLabelEl.hidden = false
