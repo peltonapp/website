@@ -2,20 +2,9 @@
 import Base from '../layouts/Base.astro'
 import DownloadChip from '../components/DownloadChip.astro'
 import Picture from '../components/Picture.astro'
-import { links, release } from '../data/site.js'
+import { links, release, screenshots } from '../data/site.js'
 
-const shots = [
-  '/img/pelton-theme-default',
-  '/img/pelton-theme-slate',
-  '/img/pelton-theme-teal',
-  '/img/pelton-theme-forest',
-  '/img/pelton-theme-violet',
-  '/img/onboarding-welcome',
-  '/img/onboarding-why',
-  '/img/onboarding-privacy',
-  '/img/onboarding-import',
-  '/img/onboarding-done',
-]
+const shots = screenshots
 ---
 
 <Base
@@ -59,24 +48,29 @@ const shots = [
 
         <div>
           <div class="dl-shots" data-dl-shots aria-hidden="true">
-            {shots.map((base, i) => (
-              <div class="dl-shot" data-active={i === 0}>
-                <Picture
-                  base={base}
-                  alt=""
-                  width={1400}
-                  height={934}
-                  sizes="(max-width: 900px) 92vw, 50vw"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
-              </div>
-            ))}
+            {shots.map((base, i) =>
+              i === 0 ? (
+                <div class="dl-shot" data-active="true">
+                  <Picture
+                    base={base}
+                    alt=""
+                    width={1400}
+                    height={934}
+                    sizes="(max-width: 900px) 92vw, 50vw"
+                    loading="eager"
+                  />
+                </div>
+              ) : (
+                <div class="dl-shot" data-active="false" data-base={base} data-w="1400" data-h="934" />
+              )
+            )}
           </div>
           <div class="dl-shots-dots" data-dl-shots-dots>
             {shots.map((_, i) => (
               <button type="button" data-active={i === 0} aria-label={`Show screenshot ${i + 1}`} />
             ))}
           </div>
+          <p class="dl-shots-note">* Shown on macOS. Windows and Linux look slightly different.</p>
         </div>
       </div>
     </div>
@@ -164,36 +158,11 @@ const shots = [
 
   <script>
     import { initCliModal } from '../scripts/download.js'
+    import { initShotCarousel } from '../scripts/shots.js'
     initCliModal()
-
-    const shots = document.querySelectorAll<HTMLElement>('[data-dl-shots] .dl-shot')
-    const dots = document.querySelectorAll<HTMLButtonElement>('[data-dl-shots-dots] button')
-
-    if (shots.length > 1) {
-      let active = 0
-      let timer = 0
-
-      const show = (i: number) => {
-        shots[active].dataset.active = 'false'
-        dots[active].dataset.active = 'false'
-        active = i
-        shots[active].dataset.active = 'true'
-        dots[active].dataset.active = 'true'
-      }
-
-      const startAuto = () => {
-        window.clearInterval(timer)
-        timer = window.setInterval(() => show((active + 1) % shots.length), 2000)
-      }
-
-      dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-          show(i)
-          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startAuto()
-        })
-      })
-
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startAuto()
-    }
+    initShotCarousel('[data-dl-shots]', '.dl-shot', {
+      dotsSelector: '[data-dl-shots-dots]',
+      intervalMs: 2000,
+    })
   </script>
 </Base>

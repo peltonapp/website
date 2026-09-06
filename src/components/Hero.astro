@@ -1,22 +1,29 @@
 ---
 import Picture from './Picture.astro'
 import Icon from './Icon.astro'
-import { release } from '../data/site.js'
+import { release, heroScreenshots } from '../data/site.js'
 ---
 
 <section class="hero">
   <div class="hero-panel">
-    <div class="hero-art">
-      <Picture
-        base="/img/screenshot"
-        alt="The Pelton window: three accounts in the sidebar, a message list with colored flags, and an open message in the reading pane"
-        width={2784}
-        height={1928}
-        widths={[700, 1000, 1400, 2000]}
-        loading="eager"
-        fetchpriority="high"
-        sizes="(max-width: 900px) 100vw, 1000px"
-      />
+    <div class="hero-art" data-hero-shots>
+      {heroScreenshots.map((base, i) =>
+        i === 0 ? (
+          <div class="hero-shot" data-active="true">
+            <Picture
+              base={base}
+              alt="The Pelton window: three accounts in the sidebar, a message list with colored flags, and an open message in the reading pane"
+              width={1400}
+              height={936}
+              loading="eager"
+              fetchpriority="high"
+              sizes="(max-width: 900px) 100vw, 1000px"
+            />
+          </div>
+        ) : (
+          <div class="hero-shot" data-active="false" data-base={base} data-w="1400" data-h="936" />
+        )
+      )}
     </div>
 
     <div class="hero-copy">
@@ -36,3 +43,8 @@ import { release } from '../data/site.js'
     </a>
   </div>
 </section>
+
+<script>
+  import { initShotCarousel } from '../scripts/shots.js'
+  initShotCarousel('[data-hero-shots]', '.hero-shot', { intervalMs: 2000 })
+</script>

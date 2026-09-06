@@ -33,6 +33,37 @@ export const release = {
   url: 'https://github.com/TRC-Loop/Pelton/releases/tag/v2026.4',
 }
 
+// Real screenshots: themes, onboarding, settings. The hero gets the shorter
+// list (the app itself, no setup flow); the download page gets all of it.
+export const heroScreenshots = [
+  '/img/pelton-theme-default',
+  '/img/pelton-theme-slate',
+  '/img/pelton-theme-teal',
+  '/img/pelton-theme-forest',
+  '/img/pelton-theme-violet',
+  '/img/onboarding-inbox1',
+  '/img/onboarding-inbox2',
+  '/img/onboarding-inbox3',
+  '/img/onboarding-settings',
+]
+
+export const screenshots = [
+  ...heroScreenshots,
+  '/img/onboarding-welcome',
+  '/img/onboarding-language',
+  '/img/onboarding-why',
+  '/img/onboarding-privacy',
+  '/img/onboarding-theme',
+  '/img/onboarding-accent',
+  '/img/onboarding-density',
+  '/img/onboarding-size',
+  '/img/onboarding-list',
+  '/img/onboarding-finishing',
+  '/img/onboarding-import',
+  '/img/onboarding-addmailbox',
+  '/img/onboarding-done',
+]
+
 export const nav = [
   { href: '/#mail', label: 'Features' },
   { href: '/privacy-security', label: 'Privacy' },
