@@ -140,7 +140,12 @@ function disclaimerGate() {
 function gate(el, ask) {
   el.addEventListener('click', (e) => {
     const url = el.getAttribute('href')
-    if (!url || url.startsWith('/') || !/github\.com|fedorainfracloud/.test(url)) return
+    // Only a real release asset gets the fake-download-then-redirect-to-/thanks
+    // treatment. If the per-OS asset never resolved (API down, rate limited),
+    // the href is still the generic releases/latest page: let that navigate
+    // normally instead of "downloading" an HTML page and sending its URL to
+    // /thanks as if it were a file.
+    if (!url || !/github\.com\/.+\/releases\/download\//.test(url)) return
     e.preventDefault()
     if (ask) ask(url)
     else startDownload(url)
