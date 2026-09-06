@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro'
 import DownloadChip from '../components/DownloadChip.astro'
+import Picture from '../components/Picture.astro'
 import { links } from '../data/site.js'
+
+const shots = ['default', 'slate', 'teal', 'forest', 'violet']
 ---
 
 <Base
@@ -11,33 +14,52 @@ import { links } from '../data/site.js'
 >
   <section class="band">
     <div class="wrap sec">
-      <div class="sec-head">
-        <h1 class="h-section">Download</h1>
-      </div>
+      <div class="dl-grid">
+        <div class="dl-main">
+          <div class="sec-head">
+            <h1 class="h-section">Download</h1>
+          </div>
 
-      <div class="dl-lead">
-        <div id="dl-chip-wrap">
-          <DownloadChip mode="download" />
+          <div class="dl-lead">
+            <div id="dl-chip-wrap">
+              <DownloadChip mode="download" />
+            </div>
+            <p class="dl-version" id="dl-mobile-notice" hidden>
+              There is no Pelton for mobile yet.{' '}
+              <a class="tlink" href={links.releasesLatest} rel="noreferrer noopener">
+                Download anyway
+              </a>
+            </p>
+            <p class="dl-version">
+              <button type="button" class="tlink dl-textbtn" id="dl-cli-open">
+                Install from a terminal
+              </button>
+            </p>
+            <p class="dl-version">
+              The official ways to get Pelton are this website, the{' '}
+              <a class="tlink" href={links.releases} rel="noreferrer noopener">GitHub releases</a>{' '}
+              page, the <a class="tlink" href={links.aur} rel="noreferrer noopener">AUR package</a>,
+              and <a class="tlink" href={links.copr} rel="noreferrer noopener">Fedora Copr</a>.<br />
+              Other sites offering a Pelton installer are not affiliated with this project and have
+              not been checked.
+            </p>
+          </div>
         </div>
-        <p class="dl-version" id="dl-mobile-notice" hidden>
-          There is no Pelton for mobile yet.{' '}
-          <a class="tlink" href={links.releasesLatest} rel="noreferrer noopener">
-            Download anyway
-          </a>
-        </p>
-        <p class="dl-version">
-          <button type="button" class="tlink dl-textbtn" id="dl-cli-open">
-            Install from a terminal
-          </button>
-        </p>
-        <p class="dl-version">
-          The official ways to get Pelton are this website, the{' '}
-          <a class="tlink" href={links.releases} rel="noreferrer noopener">GitHub releases</a> page,
-          the <a class="tlink" href={links.aur} rel="noreferrer noopener">AUR package</a>, and{' '}
-          <a class="tlink" href={links.copr} rel="noreferrer noopener">Fedora Copr</a>.<br />
-          Other sites offering a Pelton installer are not affiliated with this project and have
-          not been checked.
-        </p>
+
+        <div class="dl-shots" data-dl-shots aria-hidden="true">
+          {shots.map((key, i) => (
+            <div class="dl-shot" data-active={i === 0}>
+              <Picture
+                base={`/img/pelton-theme-${key}`}
+                alt=""
+                width={1400}
+                height={934}
+                sizes="(max-width: 900px) 92vw, 50vw"
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -113,5 +135,15 @@ import { links } from '../data/site.js'
   <script>
     import { initCliModal } from '../scripts/download.js'
     initCliModal()
+
+    const shots = document.querySelectorAll<HTMLElement>('[data-dl-shots] .dl-shot')
+    if (shots.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let active = 0
+      window.setInterval(() => {
+        shots[active].dataset.active = 'false'
+        active = (active + 1) % shots.length
+        shots[active].dataset.active = 'true'
+      }, 4000)
+    }
   </script>
 </Base>

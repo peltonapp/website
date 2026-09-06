@@ -364,6 +364,53 @@
   justify-items: start;
 }
 
+.dl-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.dl-main {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.dl-shots {
+  position: relative;
+  aspect-ratio: 1400 / 934;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dl-shot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-out);
+}
+
+.dl-shot[data-active='true'] {
+  opacity: 1;
+}
+
+.dl-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .dl-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-shots {
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 420px;
+  }
+}
+
 .dl-version {
   font-size: 14px;
   color: var(--text-tertiary);
