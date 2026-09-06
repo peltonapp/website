@@ -2,9 +2,20 @@
 import Base from '../layouts/Base.astro'
 import DownloadChip from '../components/DownloadChip.astro'
 import Picture from '../components/Picture.astro'
-import { links } from '../data/site.js'
+import { links, release } from '../data/site.js'
 
-const shots = ['default', 'slate', 'teal', 'forest', 'violet']
+const shots = [
+  '/img/pelton-theme-default',
+  '/img/pelton-theme-slate',
+  '/img/pelton-theme-teal',
+  '/img/pelton-theme-forest',
+  '/img/pelton-theme-violet',
+  '/img/onboarding-welcome',
+  '/img/onboarding-why',
+  '/img/onboarding-privacy',
+  '/img/onboarding-import',
+  '/img/onboarding-done',
+]
 ---
 
 <Base
@@ -46,19 +57,26 @@ const shots = ['default', 'slate', 'teal', 'forest', 'violet']
           </div>
         </div>
 
-        <div class="dl-shots" data-dl-shots aria-hidden="true">
-          {shots.map((key, i) => (
-            <div class="dl-shot" data-active={i === 0}>
-              <Picture
-                base={`/img/pelton-theme-${key}`}
-                alt=""
-                width={1400}
-                height={934}
-                sizes="(max-width: 900px) 92vw, 50vw"
-                loading={i === 0 ? 'eager' : 'lazy'}
-              />
-            </div>
-          ))}
+        <div>
+          <div class="dl-shots" data-dl-shots aria-hidden="true">
+            {shots.map((base, i) => (
+              <div class="dl-shot" data-active={i === 0}>
+                <Picture
+                  base={base}
+                  alt=""
+                  width={1400}
+                  height={934}
+                  sizes="(max-width: 900px) 92vw, 50vw"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            ))}
+          </div>
+          <div class="dl-shots-dots" data-dl-shots-dots>
+            {shots.map((_, i) => (
+              <button type="button" data-active={i === 0} aria-label={`Show screenshot ${i + 1}`} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -122,6 +140,18 @@ const shots = ['default', 'slate', 'teal', 'forest', 'violet']
           {' '}(Thanks!)
         </span>
       </div>
+      <div class="cli-block">
+        <b>Nix, via the flake</b>
+        <div class="cli-cmd">
+          <pre><code>nix run github:TRC-Loop/Pelton/v{release.version}</code></pre>
+          <button type="button" class="cli-copy" data-cli-copy>Copy</button>
+        </div>
+        <div class="cli-cmd">
+          <pre><code>nix profile install github:TRC-Loop/Pelton/v{release.version}</code></pre>
+          <button type="button" class="cli-copy" data-cli-copy>Copy</button>
+        </div>
+        <span class="cli-credit">Linux only for now. Point it at a release tag, not the bare repo.</span>
+      </div>
     </div>
     <p class="dl-version">
       Installing a .deb, .rpm or the raw binary you already downloaded? That command is on the
@@ -137,13 +167,33 @@ const shots = ['default', 'slate', 'teal', 'forest', 'violet']
     initCliModal()
 
     const shots = document.querySelectorAll<HTMLElement>('[data-dl-shots] .dl-shot')
-    if (shots.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const dots = document.querySelectorAll<HTMLButtonElement>('[data-dl-shots-dots] button')
+
+    if (shots.length > 1) {
       let active = 0
-      window.setInterval(() => {
+      let timer = 0
+
+      const show = (i: number) => {
         shots[active].dataset.active = 'false'
-        active = (active + 1) % shots.length
+        dots[active].dataset.active = 'false'
+        active = i
         shots[active].dataset.active = 'true'
-      }, 4000)
+        dots[active].dataset.active = 'true'
+      }
+
+      const startAuto = () => {
+        window.clearInterval(timer)
+        timer = window.setInterval(() => show((active + 1) % shots.length), 2000)
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          show(i)
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startAuto()
+        })
+      })
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startAuto()
     }
   </script>
 </Base>

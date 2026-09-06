@@ -400,6 +400,42 @@
   object-fit: cover;
 }
 
+.dl-shots-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.dl-shots-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border-radius: 3px;
+  background: var(--border-default);
+  cursor: var(--cursor-action);
+  transition:
+    background 0.3s var(--ease-out),
+    width 0.3s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .dl-shots-dots button:hover {
+    background: var(--text-tertiary);
+  }
+}
+
+.dl-shots-dots button[data-active='true'] {
+  width: 18px;
+  background: var(--accent);
+}
+
+@media (hover: hover) {
+  .dl-shots-dots button[data-active='true']:hover {
+    background: var(--accent);
+  }
+}
+
 @media (max-width: 900px) {
   .dl-grid {
     grid-template-columns: 1fr;
