@@ -202,51 +202,59 @@ import Base from '../layouts/Base.astro'
 
     if (file && box && nameEl && valueEl && cmdEl && compareEl) {
       nameEl.textContent = file
+      const os = osFromFile(file)
+
+      // The verify command itself never depends on knowing the published
+      // digest, so show the box and the command right away rather than
+      // waiting on (and being blocked by) the release fetch below.
+      cmdEl.textContent = verifyCommand(file, os)
+      box.hidden = false
+
+      if (os === 'win' && cmdAltRow && cmdAltLabelEl && cmdAltEl) {
+        if (cmdLabelEl) {
+          cmdLabelEl.textContent = 'In PowerShell:'
+          cmdLabelEl.hidden = false
+        }
+        cmdAltLabelEl.textContent = 'In Command Prompt (cmd.exe):'
+        cmdAltLabelEl.hidden = false
+        cmdAltEl.textContent = verifyCommandCmd(file)
+        cmdAltRow.hidden = false
+      }
+
+      let digest = ''
+
+      document.querySelectorAll<HTMLButtonElement>('[data-copy-btn]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.copyTarget
+          const text =
+            target === 'hash'
+              ? digest
+              : target === 'cmd'
+                ? cmdEl.textContent
+                : target === 'cmdAlt'
+                  ? cmdAltEl?.textContent
+                  : compareEl.textContent
+          if (!text) return
+          navigator.clipboard?.writeText(text).then(() => {
+            const label = btn.textContent
+            btn.textContent = 'Copied'
+            window.setTimeout(() => (btn.textContent = label), 1200)
+          })
+        })
+      })
+
       fetchRelease().then((rel) => {
         const asset = rel?.assets?.find((a) => a.name === file)
         if (!asset?.digest) {
-          valueEl.textContent = 'Not published for this file.'
+          valueEl.textContent = rel
+            ? 'Not published for this file.'
+            : "Could not reach GitHub to look this up. Check the hash on the file's release page instead."
+          compareEl.hidden = true
           return
         }
-        const digest = asset.digest.replace(/^sha256:/, '')
-        const os = osFromFile(file)
+        digest = asset.digest.replace(/^sha256:/, '')
         valueEl.textContent = digest
-        cmdEl.textContent = verifyCommand(file, os)
         compareEl.textContent = compareCommand(file, digest, os)
-        box.hidden = false
-
-        // Get-FileHash needs PowerShell, so plain cmd.exe users need a
-        // different command and both need a label to tell them apart.
-        if (os === 'win' && cmdAltRow && cmdAltLabelEl && cmdAltEl) {
-          if (cmdLabelEl) {
-            cmdLabelEl.textContent = 'In PowerShell:'
-            cmdLabelEl.hidden = false
-          }
-          cmdAltLabelEl.textContent = 'In Command Prompt (cmd.exe):'
-          cmdAltLabelEl.hidden = false
-          cmdAltEl.textContent = verifyCommandCmd(file)
-          cmdAltRow.hidden = false
-        }
-
-        document.querySelectorAll<HTMLButtonElement>('[data-copy-btn]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const target = btn.dataset.copyTarget
-            const text =
-              target === 'hash'
-                ? digest
-                : target === 'cmd'
-                  ? cmdEl.textContent
-                  : target === 'cmdAlt'
-                    ? cmdAltEl?.textContent
-                    : compareEl.textContent
-            if (!text) return
-            navigator.clipboard?.writeText(text).then(() => {
-              const label = btn.textContent
-              btn.textContent = 'Copied'
-              window.setTimeout(() => (btn.textContent = label), 1200)
-            })
-          })
-        })
       })
     }
 
