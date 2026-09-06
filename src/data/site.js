@@ -15,11 +15,13 @@ export const links = {
   releasesLatest: 'https://github.com/TRC-Loop/Pelton/releases/latest',
   issues: 'https://github.com/TRC-Loop/Pelton/issues',
   api: 'https://api.github.com/repos/TRC-Loop/Pelton/releases/latest',
+  repoApi: 'https://api.github.com/repos/TRC-Loop/Pelton',
   discord: '/discord',
   docs: 'https://docs.pelton.app',
   email: 'contact@pelton.app',
   copr: 'https://copr.fedorainfracloud.org/coprs/arnek/Pelton/',
   coprEnable: 'arnek/Pelton',
+  aur: 'https://aur.archlinux.org/packages/pelton-bin',
   license: 'https://github.com/TRC-Loop/Pelton/blob/main/LICENSE',
   conduct: 'https://github.com/TRC-Loop/Pelton/blob/main/CODE_OF_CONDUCT.md',
   security: 'https://github.com/TRC-Loop/Pelton/blob/main/SECURITY.md',
@@ -248,7 +250,7 @@ export const mcpRows = [
 
 export const privacyCards = [
   {
-    icon: 'wifi-off',
+    icon: 'broadcast-off',
     title: 'Pelton never phones home',
     body: 'It makes no request to any server we run. There is no account, no licence check and no update ping you did not ask for.',
     span: 2,
@@ -267,11 +269,6 @@ export const privacyCards = [
     icon: 'key',
     title: 'Keys stay on the machine',
     body: 'PGP and S/MIME key material is stored and used locally. Nothing is escrowed anywhere.',
-  },
-  {
-    icon: 'database',
-    title: 'One file you can delete',
-    body: 'Your mail sits in a local SQLite database. Delete it and it is gone.',
   },
   {
     icon: 'code',

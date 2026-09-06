@@ -255,8 +255,8 @@
 .chip-menu i {
   margin-left: auto;
   font-style: normal;
-  color: var(--text-tertiary);
-  font-size: var(--fz-label);
+  color: var(--text-secondary);
+  font-size: 14px;
   font-weight: var(--fw-regular);
 }
 
@@ -586,6 +586,12 @@
     background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
   }
+}
+
+.foot-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .foot-note {

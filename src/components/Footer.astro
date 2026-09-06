@@ -4,6 +4,25 @@ import Mark from './Mark.astro'
 import { links, release } from '../data/site.js'
 
 const year = 2026
+
+// Fetched once per build, not per visitor: this runs at build time, gets
+// baked into the static HTML, and costs nothing at request time. A failed
+// or rate-limited request just means the page ships without the count
+// rather than failing the build.
+let stars: number | null = null
+try {
+  const res = await fetch(links.repoApi, {
+    headers: { 'User-Agent': 'pelton-website-build', Accept: 'application/vnd.github+json' },
+  })
+  if (res.ok) {
+    const data = await res.json()
+    if (typeof data.stargazers_count === 'number') stars = data.stargazers_count
+  }
+} catch {
+  stars = null
+}
+
+const starLabel = stars !== null ? new Intl.NumberFormat('en', { notation: 'compact' }).format(stars) : null
 ---
 
 <footer class="foot">
@@ -40,6 +59,8 @@ const year = 2026
           <li><a href="/#features">Features</a></li>
           <li><a href="/privacy-security">Privacy and security</a></li>
           <li><a href="/changelog">Changelog</a></li>
+          <li><a href={links.client} rel="noreferrer noopener">Source code</a></li>
+          <li><a href={links.issues} rel="noreferrer noopener">Issue tracker</a></li>
           <li><a href={links.themesSite} rel="noreferrer noopener">Theme gallery</a></li>
           <li><a href="/design">Design system</a></li>
         </ul>
@@ -49,8 +70,6 @@ const year = 2026
         <h3>Project</h3>
         <ul>
           <li><a href={links.org} rel="noreferrer noopener">GitHub organisation</a></li>
-          <li><a href={links.client} rel="noreferrer noopener">Source code</a></li>
-          <li><a href={links.issues} rel="noreferrer noopener">Issue tracker</a></li>
           <li><a href="/community">Contribute</a></li>
           <li><a href={links.docs} rel="noreferrer noopener">Documentation</a></li>
         </ul>
@@ -71,6 +90,12 @@ const year = 2026
       <span>&copy; {year} The Pelton Project. Released under the GNU GPL-3.0.</span>
       <nav aria-label="Meta">
         <a href="/changelog">v{release.version}</a>
+        {starLabel && (
+          <a class="foot-stars" href={`${links.client}/stargazers`} rel="noreferrer noopener">
+            <Icon name="star" size={13} stroke={2} />
+            {starLabel}
+          </a>
+        )}
         <a href="/llms.txt">llms.txt</a>
         <a href="/.well-known/security.txt">security.txt</a>
       </nav>

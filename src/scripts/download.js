@@ -185,11 +185,25 @@ export function initChips() {
     const more = chip.querySelector('[data-chip-more]')
     const menu = chip.querySelector('[data-chip-menu]')
 
-    if (chip.dataset.mode === 'download') {
-      const main = chip.querySelector('[data-chip-main]')
-      if (main) gate(main, ask)
-    }
-    menu?.querySelectorAll('[data-build]').forEach((el) => gate(el, ask))
+    const main = chip.dataset.mode === 'download' ? chip.querySelector('[data-chip-main]') : null
+    if (main) gate(main, ask)
+
+    // Picking a build from the dropdown does not download it: it points the
+    // main button at that build and closes the menu, so the button always
+    // shows what a press of it will actually get, and a second, deliberate
+    // press is what starts the download.
+    menu?.querySelectorAll('[data-build]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        if (!main) return
+        e.preventDefault()
+        main.href = el.getAttribute('href') || main.href
+        const label = main.querySelector('[data-chip-label]')
+        if (label && el.dataset.label) label.textContent = `Download for ${el.dataset.label}`
+        chip.dataset.open = 'false'
+        menu.hidden = true
+        more?.setAttribute('aria-expanded', 'false')
+      })
+    })
 
     more?.addEventListener('click', () => {
       const open = chip.dataset.open === 'true'

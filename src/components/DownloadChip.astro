@@ -52,7 +52,12 @@ const builds = [
 
       <div class="chip-menu" data-chip-menu hidden>
         {builds.map((b) => (
-          <a href={links.releasesLatest} data-build={b.key} rel="noreferrer noopener">
+          <a
+            href={links.releasesLatest}
+            data-build={b.key}
+            data-label={`${b.name} (${b.hint})`}
+            rel="noreferrer noopener"
+          >
             <Icon name={b.icon} size={17} stroke={1.8} />
             {b.name}
             <i>{b.hint}</i>
@@ -63,6 +68,11 @@ const builds = [
           <Icon name="package" size={17} stroke={1.8} />
           Fedora Copr
           <i>{links.coprEnable}</i>
+        </a>
+        <a href={links.aur} rel="noreferrer noopener">
+          <Icon name="package" size={17} stroke={1.8} />
+          Arch AUR
+          <i>pelton-bin</i>
         </a>
         <a href={links.releases} rel="noreferrer noopener">
           <Icon name="external-link" size={17} stroke={1.8} />
