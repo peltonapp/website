@@ -511,7 +511,7 @@
 .foot-mark {
   position: absolute;
   right: clamp(-140px, -8vw, -70px);
-  bottom: 40px;
+  bottom: 130px;
   width: clamp(440px, 42vw, 680px);
   height: auto;
   transform: translateY(75%);
