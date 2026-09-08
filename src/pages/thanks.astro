@@ -27,6 +27,10 @@ import Base from '../layouts/Base.astro'
             Why am I seeing this?
           </button>
         </p>
+        <p class="dl-version steps-why" data-redownload hidden>
+          Download didn't start?
+          <a href="#" class="tlink" data-redownload-link>Download directly</a>
+        </p>
       </div>
 
       <div class="cli-block" data-install-step hidden>
@@ -188,6 +192,15 @@ import Base from '../layouts/Base.astro'
     if (file) {
       showRelevantStep(file)
       renderInstallStep(file)
+    }
+
+    if (url) {
+      const redownload = document.querySelector<HTMLElement>('[data-redownload]')
+      const redownloadLink = document.querySelector<HTMLAnchorElement>('[data-redownload-link]')
+      if (redownload && redownloadLink) {
+        redownloadLink.href = url
+        redownload.hidden = false
+      }
     }
 
     const box = document.querySelector<HTMLElement>('[data-hash-box]')
