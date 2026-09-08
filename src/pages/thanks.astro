@@ -46,7 +46,6 @@ import Base from '../layouts/Base.astro'
             Copy
           </button>
         </div>
-        <small class="hash-label" data-hash-cmd-label hidden></small>
         <div class="hash-row">
           <code class="mono hash-cmd" data-hash-cmd></code>
           <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="cmd">
@@ -56,13 +55,6 @@ import Base from '../layouts/Base.astro'
         <div class="hash-row">
           <code class="mono hash-cmd" data-hash-compare></code>
           <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="compare">
-            Copy
-          </button>
-        </div>
-        <small class="hash-label" data-hash-cmd-alt-label hidden></small>
-        <div class="hash-row" data-hash-cmd-alt-row hidden>
-          <code class="mono hash-cmd" data-hash-cmd-alt></code>
-          <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="cmdAlt">
             Copy
           </button>
         </div>
@@ -118,11 +110,6 @@ import Base from '../layouts/Base.astro'
       }
       const hashCmd = os === 'mac' ? `shasum -a 256 "${file}"` : `sha256sum "${file}"`
       return `[ "$(${hashCmd} | cut -d' ' -f1)" = "${digest}" ] && echo Match || echo Mismatch`
-    }
-
-    // Get-FileHash only exists in PowerShell. Plain cmd.exe needs certutil instead.
-    function verifyCommandCmd(file: string): string {
-      return `certutil -hashfile ${file} SHA256`
     }
 
     // Which first-launch step is relevant to the file just downloaded: a
@@ -207,11 +194,7 @@ import Base from '../layouts/Base.astro'
     const nameEl = document.querySelector<HTMLElement>('[data-hash-name]')
     const valueEl = document.querySelector<HTMLElement>('[data-hash-value]')
     const cmdEl = document.querySelector<HTMLElement>('[data-hash-cmd]')
-    const cmdLabelEl = document.querySelector<HTMLElement>('[data-hash-cmd-label]')
     const compareEl = document.querySelector<HTMLElement>('[data-hash-compare]')
-    const cmdAltRow = document.querySelector<HTMLElement>('[data-hash-cmd-alt-row]')
-    const cmdAltLabelEl = document.querySelector<HTMLElement>('[data-hash-cmd-alt-label]')
-    const cmdAltEl = document.querySelector<HTMLElement>('[data-hash-cmd-alt]')
 
     if (file && box && nameEl && valueEl && cmdEl && compareEl) {
       nameEl.textContent = file
@@ -223,30 +206,13 @@ import Base from '../layouts/Base.astro'
       cmdEl.textContent = verifyCommand(file, os)
       box.hidden = false
 
-      if (os === 'win' && cmdAltRow && cmdAltLabelEl && cmdAltEl) {
-        if (cmdLabelEl) {
-          cmdLabelEl.textContent = 'In PowerShell:'
-          cmdLabelEl.hidden = false
-        }
-        cmdAltLabelEl.textContent = 'In Command Prompt (cmd.exe):'
-        cmdAltLabelEl.hidden = false
-        cmdAltEl.textContent = verifyCommandCmd(file)
-        cmdAltRow.hidden = false
-      }
-
       let digest = ''
 
       document.querySelectorAll<HTMLButtonElement>('[data-copy-btn]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const target = btn.dataset.copyTarget
           const text =
-            target === 'hash'
-              ? digest
-              : target === 'cmd'
-                ? cmdEl.textContent
-                : target === 'cmdAlt'
-                  ? cmdAltEl?.textContent
-                  : compareEl.textContent
+            target === 'hash' ? digest : target === 'cmd' ? cmdEl.textContent : compareEl.textContent
           if (!text) return
           navigator.clipboard?.writeText(text).then(() => {
             const label = btn.textContent
