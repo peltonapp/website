@@ -8,7 +8,7 @@
   overflow: hidden;
   border-radius: var(--panel-r);
   background: var(--surface-hero);
-  min-height: min(calc(100svh - var(--hero-gap) * 2), 860px);
+  min-height: calc(100svh - var(--hero-gap) * 2);
   display: grid;
   grid-template-columns: minmax(0, 47%) minmax(0, 53%);
   align-content: center;
