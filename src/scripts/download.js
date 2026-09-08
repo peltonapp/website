@@ -79,10 +79,19 @@ export function fetchRelease() {
 }
 
 function startDownload(url) {
-  const frame = document.createElement('iframe')
-  frame.hidden = true
-  frame.src = url
-  document.body.appendChild(frame)
+  // A hidden iframe is unreliable for triggering the actual save: Firefox in
+  // particular can drop or block a download started from a display:none
+  // iframe navigating cross-origin (e.g. to a GitHub release asset), which is
+  // why the download silently never started on Firefox/Windows. A real
+  // anchor click is the browser-native way to start a download and works
+  // consistently across Chromium, Firefox, and Safari.
+  const a = document.createElement('a')
+  a.href = url
+  a.rel = 'noopener'
+  a.style.display = 'none'
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
   window.setTimeout(() => {
     window.location.assign(`/thanks?u=${encodeURIComponent(url)}`)
   }, 900)
