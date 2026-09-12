@@ -4,14 +4,14 @@
 
 <p align="center">
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/peltonapp/Pelton-Website?style=for-the-badge&color=blue" alt="License: GPL-3.0">
+    <img src="https://img.shields.io/github/license/peltonapp/website?style=for-the-badge&color=blue" alt="License: GPL-3.0">
   </a>
   <img src="https://img.shields.io/badge/Astro-6-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Built with Astro">
   <a href="https://pelton.app/discord">
     <img src="https://img.shields.io/badge/Discord-Join_Community-7289DA?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
   </a>
-  <a href="https://github.com/peltonapp/Pelton-Website/actions/workflows/checks.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/peltonapp/Pelton-Website/checks.yml?style=for-the-badge&label=checks" alt="Checks">
+  <a href="https://github.com/peltonapp/website/actions/workflows/checks.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/peltonapp/website/checks.yml?style=for-the-badge&label=checks" alt="Checks">
   </a>
 </p>
 
