@@ -57,9 +57,9 @@ provider.
 
 ## Project
 
-- Source: https://github.com/TRC-Loop/Pelton
+- Source: https://github.com/peltonapp/Pelton
 - Organisation: https://github.com/peltonapp
-- Releases: https://github.com/TRC-Loop/Pelton/releases
+- Releases: https://github.com/peltonapp/Pelton/releases
 - Documentation: https://docs.pelton.app
 - Theme gallery: https://themes.pelton.app
 - Licence: GPL-3.0

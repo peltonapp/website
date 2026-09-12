@@ -1,5 +1,5 @@
-const API = 'https://api.github.com/repos/TRC-Loop/Pelton/releases/latest'
-const LATEST = 'https://github.com/TRC-Loop/Pelton/releases/latest'
+const API = 'https://api.github.com/repos/peltonapp/Pelton/releases/latest'
+const LATEST = 'https://github.com/peltonapp/Pelton/releases/latest'
 
 const PATTERNS = {
   'mac-arm': [/(darwin|mac).*(arm64|applesilicon|aarch64).*\.dmg$/i, /arm64.*\.dmg$/i, /\.dmg$/i],

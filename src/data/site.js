@@ -7,30 +7,30 @@ export const site = {
 
 export const links = {
   org: 'https://github.com/peltonapp',
-  client: 'https://github.com/TRC-Loop/Pelton',
-  website: 'https://github.com/TRC-Loop/pelton.app',
-  themes: 'https://github.com/TRC-Loop/pelton-themes',
+  client: 'https://github.com/peltonapp/Pelton',
+  website: 'https://github.com/peltonapp/pelton.app',
+  themes: 'https://github.com/peltonapp/themes',
   themesSite: 'https://themes.pelton.app',
-  releases: 'https://github.com/TRC-Loop/Pelton/releases',
-  releasesLatest: 'https://github.com/TRC-Loop/Pelton/releases/latest',
-  issues: 'https://github.com/TRC-Loop/Pelton/issues',
-  api: 'https://api.github.com/repos/TRC-Loop/Pelton/releases/latest',
-  repoApi: 'https://api.github.com/repos/TRC-Loop/Pelton',
+  releases: 'https://github.com/peltonapp/Pelton/releases',
+  releasesLatest: 'https://github.com/peltonapp/Pelton/releases/latest',
+  issues: 'https://github.com/peltonapp/Pelton/issues',
+  api: 'https://api.github.com/repos/peltonapp/Pelton/releases/latest',
+  repoApi: 'https://api.github.com/repos/peltonapp/Pelton',
   discord: '/discord',
   docs: 'https://docs.pelton.app',
   email: 'contact@pelton.app',
   copr: 'https://copr.fedorainfracloud.org/coprs/arnek/Pelton/',
   coprEnable: 'arnek/Pelton',
   aur: 'https://aur.archlinux.org/packages/pelton-bin',
-  license: 'https://github.com/TRC-Loop/Pelton/blob/main/LICENSE',
-  conduct: 'https://github.com/TRC-Loop/Pelton/blob/main/CODE_OF_CONDUCT.md',
-  security: 'https://github.com/TRC-Loop/Pelton/blob/main/SECURITY.md',
+  license: 'https://github.com/peltonapp/Pelton/blob/main/LICENSE',
+  conduct: 'https://github.com/peltonapp/Pelton/blob/main/CODE_OF_CONDUCT.md',
+  security: 'https://github.com/peltonapp/Pelton/blob/main/SECURITY.md',
 }
 
 export const release = {
   version: '2026.4',
   date: '4 September 2026',
-  url: 'https://github.com/TRC-Loop/Pelton/releases/tag/v2026.4',
+  url: 'https://github.com/peltonapp/Pelton/releases/tag/v2026.4',
 }
 
 // Real screenshots: themes, onboarding, settings. The hero gets the shorter

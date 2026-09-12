@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/TRC-Loop/Pelton/13f56136136bc00b9c8721dc2042fc9c84e1b3a7/.github/pelton-large-bg.png" alt="Pelton Banner">
+  <img src="https://raw.githubusercontent.com/peltonapp/Pelton/13f56136136bc00b9c8721dc2042fc9c84e1b3a7/.github/pelton-large-bg.png" alt="Pelton Banner">
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@
 ## About
 
 This repository builds [pelton.app](https://pelton.app): the download page, feature tour, changelog,
-privacy and legal pages, and the design system reference for the [Pelton](https://github.com/TRC-Loop/Pelton)
+privacy and legal pages, and the design system reference for the [Pelton](https://github.com/peltonapp/Pelton)
 email client. It is a static [Astro](https://astro.build) site with a couple of [Svelte](https://svelte.dev)
 islands for the interactive bits (the Cmd+K demo, the theme scroller), deployed to Cloudflare Workers.
 
@@ -79,7 +79,7 @@ date.
 
 ## License
 
-Licensed under **[GPL-3.0](LICENSE)**, matching the [Pelton client](https://github.com/TRC-Loop/Pelton).
+Licensed under **[GPL-3.0](LICENSE)**, matching the [Pelton client](https://github.com/peltonapp/Pelton).
 
 Security issues belong in a private report, not a public issue. See
 [security.txt](public/.well-known/security.txt).

@@ -10,9 +10,9 @@ export default defineConfig({
   },
   devToolbar: { enabled: false },
   redirects: {
-    '/2026-4': 'https://github.com/TRC-Loop/Pelton/releases/tag/v2026.4',
+    '/2026-4': 'https://github.com/peltonapp/Pelton/releases/tag/v2026.4',
     '/discord': 'https://discord.gg/UzPNGZYy6V',
-    '/github': 'https://github.com/TRC-Loop/Pelton',
+    '/github': 'https://github.com/peltonapp/Pelton',
     '/AGENTS.md': '/llms.txt',
   },
   integrations: [
