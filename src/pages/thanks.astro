@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
+import Icon from '../components/Icon.astro'
 import { links } from '../data/site.js'
 ---
 
@@ -39,16 +40,6 @@ import { links } from '../data/site.js'
         <div data-install-cmds></div>
       </div>
 
-      <p class="dl-version" data-docs-link hidden>
-        Full setup guide: <a class="tlink" href="#" target="_blank" rel="noreferrer noopener" data-docs-link-href></a>
-      </p>
-
-      <p class="dl-version">
-        Next: <a class="tlink" href={links.docsMailbox} target="_blank" rel="noreferrer noopener">
-          set up a mailbox
-        </a>
-      </p>
-
       <div class="hash-box" data-hash-box hidden>
         <b data-hash-name class="mono"></b>
         <div class="hash-row">
@@ -68,6 +59,20 @@ import { links } from '../data/site.js'
           <button type="button" class="btn ghost sm" data-copy-btn data-copy-target="compare">
             Copy
           </button>
+        </div>
+      </div>
+
+      <div class="next-steps">
+        <b>Next steps</b>
+        <div class="next-steps-row">
+          <a class="btn lg" href="#" target="_blank" rel="noreferrer noopener" data-docs-link hidden>
+            <Icon name="book-2" size={20} stroke={2} />
+            <span>Setup guide</span>
+          </a>
+          <a class="btn accent lg" href={links.docsMailbox} target="_blank" rel="noreferrer noopener">
+            <Icon name="mail" size={20} stroke={2} />
+            <span>Set up a mailbox</span>
+          </a>
         </div>
       </div>
     </div>
@@ -196,12 +201,10 @@ import { links } from '../data/site.js'
               ? links.docsInstallLinux
               : null
       if (!href) return
-      const wrap = document.querySelector<HTMLElement>('[data-docs-link]')
-      const link = document.querySelector<HTMLAnchorElement>('[data-docs-link-href]')
-      if (!wrap || !link) return
+      const link = document.querySelector<HTMLAnchorElement>('[data-docs-link]')
+      if (!link) return
       link.href = href
-      link.textContent = href.replace(/^https:\/\//, '')
-      wrap.hidden = false
+      link.hidden = false
     }
 
     const params = new URLSearchParams(window.location.search)

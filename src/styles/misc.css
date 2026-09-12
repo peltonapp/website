@@ -673,6 +673,24 @@
   margin-top: var(--space-4);
 }
 
+.next-steps {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.next-steps > b {
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+.next-steps-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 .hash-box > b {
   font-size: 13px;
   font-weight: var(--fw-medium);
