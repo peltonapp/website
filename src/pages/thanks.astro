@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
+import { links } from '../data/site.js'
 ---
 
 <Base
@@ -40,6 +41,12 @@ import Base from '../layouts/Base.astro'
 
       <p class="dl-version" data-docs-link hidden>
         Full setup guide: <a class="tlink" href="#" target="_blank" rel="noreferrer noopener" data-docs-link-href></a>
+      </p>
+
+      <p class="dl-version">
+        Next: <a class="tlink" href={links.docsMailbox} target="_blank" rel="noreferrer noopener">
+          set up a mailbox
+        </a>
       </p>
 
       <div class="hash-box" data-hash-box hidden>

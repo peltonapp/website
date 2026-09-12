@@ -23,6 +23,7 @@ export const links = {
   docsInstallLinux: 'https://docs.pelton.app/install/linux/',
   docsInstallSource: 'https://docs.pelton.app/install/build-from-source/',
   docsCliFlags: 'https://docs.pelton.app/cli-flags/',
+  docsMailbox: 'https://docs.pelton.app/mailbox/',
   email: 'contact@pelton.app',
   copr: 'https://copr.fedorainfracloud.org/coprs/arnek/Pelton/',
   coprEnable: 'arnek/Pelton',
