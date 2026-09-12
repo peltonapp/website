@@ -38,6 +38,10 @@ import Base from '../layouts/Base.astro'
         <div data-install-cmds></div>
       </div>
 
+      <p class="dl-version" data-docs-link hidden>
+        Full setup guide: <a class="tlink" href="#" target="_blank" rel="noreferrer noopener" data-docs-link-href></a>
+      </p>
+
       <div class="hash-box" data-hash-box hidden>
         <b data-hash-name class="mono"></b>
         <div class="hash-row">
@@ -172,6 +176,27 @@ import Base from '../layouts/Base.astro'
       step.hidden = false
     }
 
+    // Same rule as everything else on this page: keyed off the file that
+    // was downloaded, not the visitor's own OS.
+    function renderDocsLink(file: string): void {
+      const os = osFromFile(file)
+      const href =
+        os === 'mac'
+          ? links.docsInstallMac
+          : os === 'win'
+            ? links.docsInstallWin
+            : os === 'linux'
+              ? links.docsInstallLinux
+              : null
+      if (!href) return
+      const wrap = document.querySelector<HTMLElement>('[data-docs-link]')
+      const link = document.querySelector<HTMLAnchorElement>('[data-docs-link-href]')
+      if (!wrap || !link) return
+      link.href = href
+      link.textContent = href.replace(/^https:\/\//, '')
+      wrap.hidden = false
+    }
+
     const params = new URLSearchParams(window.location.search)
     const url = safeUrl(params.get('u'))
     const file = url ? decodeURIComponent(url.split('/').pop() || '') : ''
@@ -179,6 +204,7 @@ import Base from '../layouts/Base.astro'
     if (file) {
       showRelevantStep(file)
       renderInstallStep(file)
+      renderDocsLink(file)
     }
 
     if (url) {
