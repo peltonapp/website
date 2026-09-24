@@ -34,9 +34,9 @@ export const links = {
 }
 
 export const release = {
-  version: '2026.4',
-  date: '4 September 2026',
-  url: 'https://github.com/peltonapp/Pelton/releases/tag/v2026.4',
+  version: '2026.4.4',
+  date: '24 September 2026',
+  url: 'https://github.com/peltonapp/Pelton/releases/tag/v2026.4.4',
 }
 
 // Real screenshots: themes, onboarding, settings. The hero gets the shorter
@@ -382,6 +382,46 @@ export const faq = [
 ]
 
 export const changelog = [
+  {
+    version: '2026.4.4',
+    date: '24 September 2026',
+    patch: true,
+    items: [
+      'Per-mailbox trust for self-signed and custom-CA certificates, so Proton Mail Bridge and self-hosted servers connect',
+      'Google Workspace accounts can sign in with Google',
+      'Simplified Chinese and Italian, bringing the interface to eleven languages',
+      'Sent mail is filed in the Sent folder again',
+    ],
+  },
+  {
+    version: '2026.4.3',
+    date: '19 September 2026',
+    patch: true,
+    items: ['Search matches every word you type, not any of them'],
+  },
+  {
+    version: '2026.4.2',
+    date: '19 September 2026',
+    patch: true,
+    items: [
+      'Right-to-left languages, and Arabic',
+      'Themeable dropdowns, so a dark theme stays dark wherever you open one',
+      'Sort and unread filter for search results',
+      'Tray icon on Linux, and a Portuguese translation',
+    ],
+  },
+  {
+    version: '2026.4.1',
+    date: '15 September 2026',
+    patch: true,
+    items: [
+      'A portable Windows exe alongside the installer',
+      'Turkish translation',
+      'Embedded video and audio play once remote content is allowed',
+      'Shortcut hints outside the message list',
+      'Sync, saved view and mailbox import fixes',
+    ],
+  },
   {
     version: '2026.4',
     date: '4 September 2026',
