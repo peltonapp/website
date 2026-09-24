@@ -4,3 +4,6 @@ onlyBuiltDependencies:
 
 ignoredBuiltDependencies:
   - '@tabler/icons'
+  # wrangler ships workerd for `wrangler dev`. The deploy only uploads the
+  # built assets, so the runtime never runs here.
+  - workerd
