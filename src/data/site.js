@@ -367,7 +367,7 @@ export const faq = [
   },
   {
     q: 'Why is the first launch blocked?',
-    a: 'The builds are not code-signed. On macOS, right-click the app and choose Open, then confirm. On Windows, choose More info, then Run anyway. After that it opens normally.',
+    a: 'The builds are not code-signed yet. On macOS, right-click the app and choose Open, then confirm. On Windows, choose More info, then Run anyway. After that it opens normally. We have applied to the SignPath Foundation for free code signing of the Windows builds.',
   },
   {
     q: 'What is it built with?',
