@@ -33,12 +33,6 @@ export const links = {
   security: 'https://github.com/peltonapp/Pelton/blob/main/SECURITY.md',
 }
 
-export const release = {
-  version: '2026.4.4',
-  date: '24 September 2026',
-  url: 'https://github.com/peltonapp/Pelton/releases/tag/v2026.4.4',
-}
-
 // Real screenshots: themes, onboarding, settings. The hero gets the shorter
 // list (the app itself, no setup flow); the download page gets all of it.
 export const heroScreenshots = [
@@ -382,6 +376,34 @@ export const faq = [
 ]
 
 export const changelog = [
+  {
+    version: '2026.4.6',
+    date: '26 October 2026',
+    patch: true,
+    items: [
+      'Saved drafts go to the server Drafts folder and open again in the composer',
+      'Mark messages as spam or not spam from the context menu',
+      'Start Pelton in the background, hidden in the tray or Dock',
+      'A colour per mailbox, marking its mail in the unified inbox and other combined lists',
+      'Date, time and unread count in the status bar',
+      'Keep opened mail unread, and sign replies above the quoted text',
+      'F6 moves between the sidebar, the message list and the reading pane',
+      'Russian translation',
+      'One notification for a burst of new mail, plus folder sync, Gmail Flagged and macOS fixes',
+    ],
+  },
+  {
+    version: '2026.4.5',
+    date: '3 October 2026',
+    patch: true,
+    items: [
+      'A proxy route per mailbox',
+      'Send with Cmd or Ctrl and Enter',
+      'Unread dot on the tray icon',
+      'Gmail accounts with unusual labels sync again',
+      'Linux builds against webkit2gtk-4.1, and the Windows tray icon answers every click',
+    ],
+  },
   {
     version: '2026.4.4',
     date: '24 September 2026',
