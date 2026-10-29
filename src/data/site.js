@@ -367,7 +367,7 @@ export const faq = [
   },
   {
     q: 'Why is the first launch blocked?',
-    a: 'The builds are not code-signed yet. On macOS, right-click the app and choose Open, then confirm. On Windows, choose More info, then Run anyway. After that it opens normally. We have applied to the SignPath Foundation for free code signing of the Windows builds.',
+    a: 'The macOS builds are not signed by Apple, and Windows signing through the SignPath Foundation is being set up. On macOS, try to open Pelton once, then go to System Settings, Privacy and Security, and choose Open Anyway. On Windows, choose More info, then Run anyway. After that it opens normally.',
   },
   {
     q: 'What is it built with?',
